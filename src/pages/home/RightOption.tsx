@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import {
   CaretRightOutlined,
   ExclamationCircleOutlined,
+  CloseOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
 import { gstate } from "@/global";
@@ -20,21 +21,32 @@ export const RightOption = observer(() => {
   const option = (
     <>
       <Flex justify="space-between" align="center">
-        <Popover
-          placement="bottom"
-          content={
-            <div className={style.optionHelpBox}>
-              <Typography.Text>
-                {gstate.locale?.optionPannel.help}
-              </Typography.Text>
-            </div>
-          }
-        >
-          <Typography.Text type="secondary" className={style.optionHelp}>
-            <ExclamationCircleOutlined/>
-          </Typography.Text>
-        </Popover>
         <Space>
+          <Typography.Text strong>
+            {gstate.locale?.optionPannel.advancedSettings}
+          </Typography.Text>
+          <Popover
+            placement="bottom"
+            content={
+              <div className={style.optionHelpBox}>
+                <Typography.Text>
+                  {gstate.locale?.optionPannel.help}
+                </Typography.Text>
+              </div>
+            }
+          >
+            <Typography.Text type="secondary" className={style.optionHelp}>
+              <ExclamationCircleOutlined />
+            </Typography.Text>
+          </Popover>
+        </Space>
+        <Space>
+          <Button
+            icon={<CloseOutlined />}
+            onClick={() => {
+              homeState.showOption = false;
+            }}
+          />
           <Button
             disabled={disabled}
             icon={<ReloadOutlined />}
@@ -42,6 +54,7 @@ export const RightOption = observer(() => {
               homeState.showOption = false;
               homeState.tempOption = { ...DefaultCompressOption };
               homeState.option = { ...DefaultCompressOption };
+              homeState.isSmartMode = true;
               homeState.reCompress();
             }}
           >
@@ -54,6 +67,7 @@ export const RightOption = observer(() => {
             onClick={() => {
               homeState.showOption = false;
               homeState.option = toJS(homeState.tempOption);
+              homeState.isSmartMode = false;
               homeState.reCompress();
             }}
           >
@@ -68,6 +82,9 @@ export const RightOption = observer(() => {
   );
 
   if (isPC) {
+    if (!homeState.showOption) {
+      return null;
+    }
     return <div className={classNames(style.side, style.sidePc)}>{option}</div>;
   } else if (isPad) {
     return (

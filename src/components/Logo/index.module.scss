@@ -2,7 +2,48 @@
   line-height: 1;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   span {
     font-size: 22px;
+  }
+}
+
+.mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #dffdea 0%, #a7f3cf 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 8px 22px rgba(18, 133, 89, 0.18);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+
+  svg {
+    width: 31px;
+    height: 31px;
+  }
+
+  .body {
+    fill: #16a36d;
+  }
+
+  .eye {
+    fill: #f8fffb;
+  }
+
+  .pupil {
+    fill: #14231c;
+  }
+
+  .smile {
+    fill: none;
+    stroke: #f8fffb;
+    stroke-width: 4.5;
+    stroke-linecap: round;
   }
 }

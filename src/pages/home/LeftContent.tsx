@@ -3,10 +3,12 @@ import style from "./index.module.scss";
 import { observer } from "mobx-react-lite";
 import {
   ClearOutlined,
+  CompressOutlined,
   DownloadOutlined,
   FolderAddOutlined,
   PlusOutlined,
   ReloadOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ImageInput } from "@/components/ImageInput";
@@ -28,6 +30,9 @@ export const LeftContent = observer(() => {
   const disabled = homeState.hasTaskRunning();
   const fileRef = useRef<HTMLInputElement>(null);
   const columns = useColumn(disabled);
+  const firstCompleted = Array.from(homeState.list.values()).find(
+    (item) => item.preview && item.compress,
+  );
 
   const scrollBoxRef = useRef<HTMLDivElement>(null);
   const [scrollHeight, setScrollHeight] = useState<number>(0);
@@ -88,6 +93,25 @@ export const LeftContent = observer(() => {
           )}
         </Space>
         <Space>
+          {firstCompleted && (
+            <Button
+              disabled={disabled || homeState.isCropMode()}
+              icon={<CompressOutlined />}
+              onClick={() => {
+                homeState.compareId = firstCompleted.key;
+              }}
+            >
+              {!isMobile && gstate.locale?.listAction.compareAction}
+            </Button>
+          )}
+          <Button
+            icon={<SettingOutlined />}
+            onClick={() => {
+              homeState.showOption = true;
+            }}
+          >
+            {!isMobile && gstate.locale?.optionPannel.advancedSettings}
+          </Button>
           <Button
             disabled={disabled}
             icon={<ClearOutlined />}
@@ -134,11 +158,13 @@ export const LeftContent = observer(() => {
                   level: 6,
                 },
               });
-              createDownload("picsmaller.zip", result);
+              createDownload("frog-compress.zip", result);
               gstate.loading = false;
             }}
           >
-            {!isMobile && gstate.locale?.listAction.downloadAll}
+            {!isMobile &&
+              (gstate.locale?.listAction.downloadZip ??
+                gstate.locale?.listAction.downloadAll)}
           </Button>
         </Space>
         <ImageInput ref={fileRef} />

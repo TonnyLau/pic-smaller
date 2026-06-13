@@ -5,7 +5,12 @@ import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 import { gstate } from "@/global";
 import { ImageItem, homeState } from "@/states/home";
 import { Indicator } from "@/components/Indicator";
-import { createDownload, formatSize, getOutputFileName } from "@/functions";
+import {
+  calculateSaving,
+  createDownload,
+  formatSize,
+  getOutputFileName,
+} from "@/functions";
 import { useResponse } from "@/media";
 
 export function useColumn(disabled: boolean) {
@@ -51,7 +56,9 @@ export function useColumn(disabled: boolean) {
                 justify="center"
                 onClick={async () => {
                   if (homeState.isCropMode()) {
-                    message.warning("裁剪模式不支持预览对比");
+                    message.warning(
+                      gstate.locale?.optionPannel.cropCompareWarning,
+                    );
                     return;
                   }
                   homeState.compareId = row.key;
@@ -172,8 +179,8 @@ export function useColumn(disabled: boolean) {
       render(_, row) {
         if (!row.compress) return "-";
         const lower = row.blob.size > row.compress.blob.size;
-        const rate = (row.compress.blob.size - row.blob.size) / row.blob.size;
-        const formatRate = (Math.abs(rate) * 100).toFixed(2) + "%";
+        const saving = calculateSaving(row.blob.size, row.compress.blob.size);
+        const formatRate = Math.abs(saving.savedPercent).toFixed(2) + "%";
         if (lower) {
           return (
             <Flex align="center" justify="flex-end">

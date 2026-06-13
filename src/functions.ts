@@ -3,6 +3,67 @@ import { Mimes } from "./mimes";
 import type { ImageItem } from "./states/home";
 import type { CompressOption } from "./engines/ImageBase";
 
+export function resolveSmartCompressOption(fileType: string): CompressOption {
+  const option: CompressOption = {
+    preview: {
+      maxSize: 256,
+    },
+    resize: {
+      method: undefined,
+      width: undefined,
+      height: undefined,
+      short: undefined,
+      long: undefined,
+      cropWidthRatio: undefined,
+      cropHeightRatio: undefined,
+      cropWidthSize: undefined,
+      cropHeightSize: undefined,
+    },
+    format: {
+      target: undefined,
+      transparentFill: "#FFFFFF",
+    },
+    jpeg: {
+      quality: 0.75,
+    },
+    png: {
+      colors: 128,
+      dithering: 0.5,
+    },
+    gif: {
+      colors: 128,
+      dithering: false,
+    },
+    avif: {
+      quality: 50,
+      speed: 8,
+    },
+  };
+
+  if (fileType === "image/png") {
+    option.png.colors = 128;
+    option.png.dithering = 0.5;
+  }
+
+  if (fileType === "image/gif") {
+    option.gif.colors = 128;
+    option.gif.dithering = false;
+  }
+
+  return option;
+}
+
+export function calculateSaving(originSize: number, outputSize: number) {
+  const savedBytes = originSize - outputSize;
+  const savedPercent =
+    originSize > 0 ? Number(((savedBytes * 100) / originSize).toFixed(2)) : 0;
+
+  return {
+    savedBytes,
+    savedPercent,
+  };
+}
+
 /**
  * Normalize pathname
  * @param pathname
@@ -206,20 +267,22 @@ export function getOutputFileName(item: ImageItem, option: CompressOption) {
  * @param event ClipboardEvent
  * @returns Array of File objects
  */
-export async function getFilesFromClipboard(event: ClipboardEvent): Promise<Array<File>> {
+export async function getFilesFromClipboard(
+  event: ClipboardEvent,
+): Promise<Array<File>> {
   const files: Array<File> = [];
-  
+
   if (!event.clipboardData) {
     return files;
   }
 
   const items = event.clipboardData.items;
-  
+
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
-    
+
     // Check if the item is an image
-    if (item.type.startsWith('image/')) {
+    if (item.type.startsWith("image/")) {
       const file = item.getAsFile();
       if (file) {
         // Check if the image type is supported
@@ -230,7 +293,7 @@ export async function getFilesFromClipboard(event: ClipboardEvent): Promise<Arra
       }
     }
   }
-  
+
   return files;
 }
 
@@ -243,15 +306,15 @@ export function hasImageInClipboard(event: ClipboardEvent): boolean {
   if (!event.clipboardData) {
     return false;
   }
-  
+
   const items = event.clipboardData.items;
-  
+
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
-    if (item.type.startsWith('image/')) {
+    if (item.type.startsWith("image/")) {
       return true;
     }
   }
-  
+
   return false;
 }

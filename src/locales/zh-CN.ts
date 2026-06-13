@@ -3,22 +3,26 @@ import zhCN from "antd/locale/zh_CN";
 
 const localeData: LocaleData = {
   antLocale: zhCN,
-  logo: "图小小",
+  logo: "青蛙压缩",
   initial: "初始化中",
   previewHelp: "拖动分割线对比压缩效果：左边是原始图，右边是压缩图",
   uploadCard: {
-    title: "选取图片到这里，支持拖拽图片和文件夹",
-    subTitle: "开源的批量图片压缩工具，支持 %s 格式",
-    pasteHint: "💡 提示：您也可以复制图片后按 Ctrl+V (Cmd+V) 粘贴",
+    title: "拖拽图片到这里 / 点击上传",
+    subTitle: "支持 %s 格式，上传后自动本地压缩",
+    pasteHint: "也可以复制图片后按 Ctrl+V (Cmd+V) 粘贴",
+    slogan: "本地压缩更安全，一键瘦身不模糊",
+    privacyHint: "图片不上传，本地处理，隐私不泄露",
   },
   listAction: {
     batchAppend: "批量添加",
     addFolder: "添加文件夹",
     clear: "清空列表",
-    downloadAll: "保存全部",
+    downloadAll: "打包下载",
+    downloadZip: "打包下载",
     downloadOne: "保存图片",
     removeOne: "移除图片",
     reCompress: "重新压缩",
+    compareAction: "对比效果",
   },
   columnTitle: {
     status: "状态",
@@ -33,7 +37,7 @@ const localeData: LocaleData = {
   },
   optionPannel: {
     failTip: "无法更小，请调整参数后重试",
-    help: "图小小是一款批量图片压缩应用程序，对选项的修改将应用到所有图片上",
+    help: "青蛙压缩默认使用智能压缩，对选项的修改将应用到所有图片上",
     resizeLable: "调整图片尺寸",
     jpegLable: "JPEG/WEBP参数",
     pngLable: "PNG参数",
@@ -65,6 +69,8 @@ const localeData: LocaleData = {
     outputFormat: "设置输出格式",
     outputFormatPlaceholder: "选择输出图片格式",
     transparentFillDesc: "选择透明填充色",
+    advancedSettings: "高级设置",
+    smartMode: "智能压缩",
     cropCompareWarning: "裁剪模式不支持对比预览",
   },
   error404: {
@@ -74,7 +80,10 @@ const localeData: LocaleData = {
   progress: {
     before: "压缩前",
     after: "压缩后",
-    rate: "压缩率",
+    rate: "节省",
+    summaryBefore: "原图大小",
+    summaryAfter: "压缩后大小",
+    summarySaved: "节省",
   },
 };
 

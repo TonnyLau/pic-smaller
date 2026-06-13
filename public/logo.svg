@@ -1,1 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="none" version="1.1" width="512" height="511.9999694824219" viewBox="0 0 512 511.9999694824219"><defs><clipPath id="master_svg0_38_06"><rect x="0" y="0" width="512" height="511.9999694824219" rx="0"/></clipPath></defs><g clip-path="url(#master_svg0_38_06)"><g><g><rect x="0" y="0" width="512" height="512" rx="0" fill="#1BA565" fill-opacity="1"/></g><g><g><path d="M512.000002861023,511.9999084472656L512.000002861023,391.5459084472656L318.00000286102295,205.99990844726562L200.00000286102295,343.5679084472656L200.00000286102295,511.9999084472656L512.000002861023,511.9999084472656L512.000002861023,511.9999084472656Z" fill-rule="evenodd" fill="#47C88B" fill-opacity="1"/></g><g><path d="M0.00000286102294921875,272.56793896484373L0.00000286102294921875,511.99993896484375L512.000002861023,511.99993896484375L512.000002861023,511.82993896484373L118.00000286102295,134.99993896484375L0.00000286102294921875,272.56793896484373Z" fill-rule="evenodd" fill="#50E19D" fill-opacity="1"/></g><g><ellipse cx="356.00000286102295" cy="118" rx="70" ry="70" fill="#FFFFFF" fill-opacity="1"/></g></g></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="96" y1="64" x2="416" y2="448" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#dffdea"/>
+      <stop offset="1" stop-color="#86efac"/>
+    </linearGradient>
+    <filter id="shadow" x="76" y="58" width="360" height="378" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="20" stdDeviation="18" flood-color="#064e3b" flood-opacity=".22"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="108" fill="url(#bg)"/>
+  <g filter="url(#shadow)">
+    <path d="M96 248c0-92.8 71.6-168 160-168s160 75.2 160 168v90c0 57.4-46.6 104-104 104H200c-57.4 0-104-46.6-104-104v-90Z" fill="#16a36d"/>
+    <circle cx="188" cy="190" r="58" fill="#f8fffb"/>
+    <circle cx="324" cy="190" r="58" fill="#f8fffb"/>
+    <circle cx="188" cy="190" r="22" fill="#14231c"/>
+    <circle cx="324" cy="190" r="22" fill="#14231c"/>
+    <path d="M188 314c31.4 38.7 68 58 110 58s78.6-19.3 110-58" fill="none" stroke="#f8fffb" stroke-width="28" stroke-linecap="round"/>
+  </g>
+</svg>

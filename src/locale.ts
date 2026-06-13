@@ -1,11 +1,10 @@
 // https://www.techonthenet.com/js/language_tags.php
-import getUserLocale from "get-user-locale";
 import { gstate } from "./global";
 import { MenuProps } from "antd";
 import { locales } from "./modules";
 
 const localeCacheKey = "Pic-Smaller-Locale";
-const defaultLang = "en-US";
+const defaultLang = "zh-CN";
 
 export const langList: NonNullable<MenuProps["items"]> = [
   { key: "en-US", label: "English" },
@@ -20,11 +19,7 @@ export const langList: NonNullable<MenuProps["items"]> = [
 ];
 
 function getLang() {
-  let lang = window.localStorage.getItem(localeCacheKey);
-  if (!lang) {
-    lang = getUserLocale();
-  }
-  return lang ?? defaultLang;
+  return window.localStorage.getItem(localeCacheKey) ?? defaultLang;
 }
 
 async function setLocaleData(lang: string) {

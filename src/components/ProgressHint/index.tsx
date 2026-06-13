@@ -47,19 +47,22 @@ export const ProgressHint = observer(() => {
         {!isMobile && (
           <>
             <Typography.Text type="secondary">
-              {gstate.locale?.progress.before}：
-              <Typography.Text>{formatSize(info.originSize)}</Typography.Text>
+              {gstate.locale?.progress.summaryBefore ??
+                gstate.locale?.progress.before}
+              ：<Typography.Text>{formatSize(info.originSize)}</Typography.Text>
               &nbsp;&nbsp;&nbsp;&nbsp;
             </Typography.Text>
             <Typography.Text type="secondary">
-              {gstate.locale?.progress.after}：
-              <Typography.Text>{formatSize(info.outputSize)}</Typography.Text>
+              {gstate.locale?.progress.summaryAfter ??
+                gstate.locale?.progress.after}
+              ：<Typography.Text>{formatSize(info.outputSize)}</Typography.Text>
               &nbsp;&nbsp;&nbsp;&nbsp;
             </Typography.Text>
           </>
         )}
         <Typography.Text type="secondary">
-          {gstate.locale?.progress.rate}：{rate}
+          {gstate.locale?.progress.summarySaved ?? gstate.locale?.progress.rate}
+          ：{rate}
           &nbsp;&nbsp;&nbsp;&nbsp;
         </Typography.Text>
       </div>

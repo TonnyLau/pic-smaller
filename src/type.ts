@@ -13,15 +13,19 @@ export interface LocaleData {
     title: string;
     subTitle: string;
     pasteHint: string;
+    slogan?: string;
+    privacyHint?: string;
   };
   listAction: {
     batchAppend: string;
     addFolder: string;
     clear: string;
     downloadAll: string;
+    downloadZip?: string;
     downloadOne: string;
     removeOne: string;
     reCompress: string;
+    compareAction?: string;
   };
   columnTitle: {
     status: string;
@@ -69,10 +73,15 @@ export interface LocaleData {
     outputFormat: string;
     outputFormatPlaceholder: string;
     transparentFillDesc: string;
+    advancedSettings?: string;
+    smartMode?: string;
   };
   progress: {
     before: string;
     after: string;
     rate: string;
+    summaryBefore?: string;
+    summaryAfter?: string;
+    summarySaved?: string;
   };
 }

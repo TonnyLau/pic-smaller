@@ -1,5 +1,6 @@
 import { CompressOption, ProcessOutput } from "@/engines/ImageBase";
 import { createCompressTask } from "@/engines/transform";
+import { calculateSaving } from "@/functions";
 import { makeAutoObservable } from "mobx";
 
 export const DefaultCompressOption: CompressOption = {
@@ -64,6 +65,7 @@ export class HomeState {
   public tempOption: CompressOption = DefaultCompressOption;
   public compareId: number | null = null;
   public showOption: boolean = false;
+  public isSmartMode: boolean = true;
 
   constructor() {
     makeAutoObservable(this);
@@ -75,17 +77,17 @@ export class HomeState {
    */
   isCropMode() {
     const resize = this.option.resize;
-    return (
+    return Boolean(
       (resize.method === "setCropRatio" &&
         resize.cropWidthRatio &&
         resize.cropHeightRatio &&
         resize.cropWidthRatio > 0 &&
         resize.cropHeightRatio > 0) ||
-      (resize.method === "setCropSize" &&
-        resize.cropWidthSize &&
-        resize.cropHeightSize &&
-        resize.cropWidthSize > 0 &&
-        resize.cropHeightSize > 0)
+        (resize.method === "setCropSize" &&
+          resize.cropWidthSize &&
+          resize.cropHeightSize &&
+          resize.cropWidthSize > 0 &&
+          resize.cropHeightSize > 0),
     );
   }
 
@@ -93,6 +95,8 @@ export class HomeState {
     this.list.clear();
     this.tempOption = { ...DefaultCompressOption };
     this.option = { ...DefaultCompressOption };
+    this.isSmartMode = true;
+    this.showOption = false;
   }
 
   reCompress() {
@@ -131,8 +135,8 @@ export class HomeState {
       }
     }
     const percent = Math.ceil((loadedNum * 100) / totalNum);
-    const originRate = ((outputSize - originSize) * 100) / originSize;
-    const rate = Number(Math.abs(originRate).toFixed(2));
+    const saving = calculateSaving(originSize, outputSize);
+    const rate = Math.abs(saving.savedPercent);
 
     return {
       totalNum,

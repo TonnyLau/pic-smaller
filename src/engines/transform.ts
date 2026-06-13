@@ -1,7 +1,7 @@
 import WorkerC from "./WorkerCompress?worker";
 import WorkerP from "./WorkerPreview?worker";
 import { useEffect } from "react";
-import { uniqId } from "@/functions";
+import { resolveSmartCompressOption, uniqId } from "@/functions";
 import { toJS } from "mobx";
 import { ImageItem, homeState } from "@/states/home";
 import { CompressOption, Dimension, ImageInfo } from "./ImageBase";
@@ -70,7 +70,9 @@ function createMessageData(item: ImageInfo): MessageData {
       width: item.width,
       height: item.height,
     },
-    option: toJS(homeState.option),
+    option: homeState.isSmartMode
+      ? resolveSmartCompressOption(item.blob.type)
+      : toJS(homeState.option),
   };
 }
 
