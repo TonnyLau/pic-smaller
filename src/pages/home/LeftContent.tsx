@@ -65,11 +65,11 @@ export const LeftContent = observer(() => {
         <div className={style.resultCopy}>
           <Typography.Title level={2}>
             {isComplete
-              ? `${gstate.locale?.logo ?? "青蛙压缩"}已帮你节省 ${savingText}%`
-              : `正在压缩...（${progressInfo.loadedNum}/${progressInfo.totalNum}）`}
+              ? `${gstate.locale?.logo ?? "青蛙压缩"}已帮你瘦身 ${savingText}%`
+              : `正在本地压缩...（${progressInfo.loadedNum}/${progressInfo.totalNum}）`}
           </Typography.Title>
           <Typography.Text>
-            {progressInfo.totalNum} 张图片已优化&nbsp;&nbsp;|&nbsp;&nbsp;原图{" "}
+            {progressInfo.totalNum} 张图片已处理&nbsp;&nbsp;|&nbsp;&nbsp;原图{" "}
             {formatSize(progressInfo.originSize)}
             &nbsp;→&nbsp;压缩后 {formatSize(progressInfo.outputSize)}
           </Typography.Text>

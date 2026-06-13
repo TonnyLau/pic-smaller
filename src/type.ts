@@ -5,6 +5,30 @@ export interface LocaleData {
   logo: string;
   initial: string;
   previewHelp: string;
+  homeContent: {
+    meta: {
+      title: string;
+      description: string;
+    };
+    intro: {
+      eyebrow: string;
+      title: string;
+      description: string;
+    };
+    features: Array<{
+      title: string;
+      description: string;
+    }>;
+    workflow: {
+      eyebrow: string;
+      title: string;
+    };
+    steps: string[];
+    faqs: Array<{
+      question: string;
+      answer: string;
+    }>;
+  };
   error404: {
     backHome: string;
     description: string;

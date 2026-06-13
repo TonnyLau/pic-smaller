@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 128px);
   flex: 1;
   position: relative;
   cursor: pointer;
@@ -17,7 +17,8 @@
   border: 0;
   overflow: hidden;
   box-sizing: border-box;
-  min-height: calc(100vh - 60px);
+  min-height: 560px;
+  max-height: 760px;
   transition: all 0.3s ease;
 
   &:hover {
@@ -164,7 +165,7 @@
 
   @media (max-width: 720px) {
     width: calc(100% - 28px);
-    min-height: calc(100% - 28px);
+    min-height: min(540px, calc(100% - 28px));
     padding: 12px;
     border-radius: 18px;
   }
@@ -278,6 +279,14 @@
     .uploadAction {
       font-size: 20px;
     }
+  }
+}
+
+@media (max-width: 720px) {
+  .container {
+    height: calc(100vh - 112px);
+    min-height: 560px;
+    max-height: none;
   }
 }
 

@@ -3,10 +3,71 @@ import trTR from "antd/locale/tr_TR";
 
 const localeData: LocaleData = {
   antLocale: trTR,
-  logo: "Pic Smaller",
+  logo: "Frog Sıkıştırma",
   initial: "Başlatılıyor",
   previewHelp:
     "Sıkıştırma etkisini karşılaştırmak için bölme çizgisini sürükleyin: soldaki orijinal görüntü, sağdaki sıkıştırılmış görüntü",
+  homeContent: {
+    meta: {
+      title: "Frog Sıkıştırma - Yerel Görsel Sıkıştırma Aracı",
+      description:
+        "Frog Sıkıştırma görselleri tarayıcınızda sıkıştırır. Görseller yüklenmez, gizlilik cihazınızda kalır ve dosyalar günlük kullanım için net kalacak şekilde küçülür.",
+    },
+    intro: {
+      eyebrow: "Yükleme yok, yerel işlem",
+      title: "Görselleri küçültün, gizliliği cihazınızda tutun",
+      description:
+        "Frog Sıkıştırma karmaşık ayarlar olmadan görselleri hafifletmek için tasarlandı. Görselleri ekleyin, tarayıcıda yerel olarak sıkıştırın, ardından özgün boyut, yeni boyut ve tasarrufu karşılaştırın.",
+    },
+    features: [
+      {
+        title: "Daha güvenli yerel sıkıştırma",
+        description:
+          "Görseller tarayıcınızda işlenir ve sunucuya gönderilmez; fotoğraflar, ekran görüntüleri ve iş dosyaları cihazınızda kalır.",
+      },
+      {
+        title: "Tek tıkla küçültme",
+        description:
+          "Görselleri bırakın, sıkıştırma otomatik başlasın. Hesap, kurulum veya karmaşık ayar gerekmez.",
+      },
+      {
+        title: "Daha küçük ama net",
+        description:
+          "Varsayılan ayarlar dosya boyutunu azaltırken paylaşım, yükleme ve görüntüleme için gereken netliği korumaya çalışır.",
+      },
+      {
+        title: "Toplu görsel işleme",
+        description:
+          "Birden fazla görsel ekleyin, tek tek indirin veya tüm sonuçları zip olarak kaydedin.",
+      },
+    ],
+    workflow: {
+      eyebrow: "Nasıl çalışır",
+      title: "Görselleri üç adımda küçültün",
+    },
+    steps: [
+      "Görselleri ekleyin veya bırakın",
+      "Tarayıcıda yerel olarak sıkıştırın",
+      "Tek dosya veya zip indirin",
+    ],
+    faqs: [
+      {
+        question: "Görseller yükleniyor mu?",
+        answer:
+          "Hayır. Frog Sıkıştırma görselleri tarayıcınızda yerel olarak işler ve dosyalarınızı kaydetmez.",
+      },
+      {
+        question: "Sıkıştırma görseli bulanık yapar mı?",
+        answer:
+          "Sıkıştırma kaliteyi biraz değiştirebilir, ancak varsayılan ayarlar küçük dosya ve günlük kullanım netliği arasında denge kurar.",
+      },
+      {
+        question: "Hangi durumlarda kullanılır?",
+        answer:
+          "Sohbet paylaşımı, form yükleme, web görselleri, belge görselleri ve büyük yerel dosyaları küçültmek için uygundur.",
+      },
+    ],
+  },
   uploadCard: {
     title: "Resimlerinizi buraya bırakın",
     subTitle: "Desteklenen formatlar: %s",
@@ -35,7 +96,7 @@ const localeData: LocaleData = {
   optionPannel: {
     failTip:
       "Daha küçük olamaz, lütfen parametreleri ayarlayın ve tekrar deneyin.",
-    help: "Pic Smaller, toplu resim sıkıştırma uygulamasıdır. Seçeneklerde yapılan değişiklikler tüm resimlere uygulanacaktır.",
+    help: "Frog Sıkıştırma, toplu resim sıkıştırma uygulamasıdır. Seçeneklerde yapılan değişiklikler tüm resimlere uygulanacaktır.",
     resizeLable: "Görüntüyü yeniden boyutlandır",
     jpegLable: "JPEG/WEBP parametreleri",
     pngLable: "PNG parametreleri",

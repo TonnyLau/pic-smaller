@@ -8,13 +8,13 @@ const defaultLang = "zh-CN";
 
 export const langList: NonNullable<MenuProps["items"]> = [
   { key: "en-US", label: "English" },
-  { key: "tr-TR", label: "Türkçe" },
+  { key: "zh-CN", label: "简体中文" },
+  { key: "zh-TW", label: "繁體中文" },
+  { key: "ja-JP", label: "日本語" },
+  { key: "ko-KR", label: "한국어" },
   { key: "fr-FR", label: "Français" },
   { key: "es-ES", label: "Español" },
-  { key: "ko-KR", label: "한국인" },
-  { key: "ja-JP", label: "日本語" },
-  { key: "zh-TW", label: "繁體中文" },
-  { key: "zh-CN", label: "简体中文" },
+  { key: "tr-TR", label: "Türkçe" },
   { key: "fa-IR", label: "فارسی" },
 ];
 
