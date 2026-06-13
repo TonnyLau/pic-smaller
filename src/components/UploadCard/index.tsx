@@ -11,7 +11,11 @@ import { getFilesFromEntry, getFilesFromHandle } from "@/functions";
 import { sprintf } from "sprintf-js";
 import { Mimes } from "@/mimes";
 
-export const UploadCard = observer(() => {
+type UploadCardProps = {
+  compact?: boolean;
+};
+
+export const UploadCard = observer(({ compact = false }: UploadCardProps) => {
   const fileRef = useRef<HTMLInputElement>(null);
   const dragRef = useRef<HTMLDivElement>(null);
 
@@ -83,7 +87,11 @@ export const UploadCard = observer(() => {
     <Flex
       justify="center"
       align="center"
-      className={classNames(style.container, state.dragActive && style.active)}
+      className={classNames(
+        style.container,
+        compact && style.compact,
+        state.dragActive && style.active,
+      )}
     >
       <Flex vertical align="center" className={style.inner}>
         <div className={style.dropZone}>

@@ -75,9 +75,18 @@ const Header = observer(() => {
 });
 
 const Body = observer(() => {
+  const hasFiles = homeState.list.size > 0;
+
   return (
     <Flex align="stretch" className={style.main}>
-      {homeState.list.size === 0 ? <UploadCard /> : <LeftContent />}
+      <div className={style.workbench}>
+        <UploadCard compact={hasFiles} />
+        {hasFiles && (
+          <div className={style.resultDock}>
+            <LeftContent />
+          </div>
+        )}
+      </div>
       <RightOption />
     </Flex>
   );

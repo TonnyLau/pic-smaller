@@ -4,6 +4,7 @@ $border: 1px solid #dfdfdf;
 .container {
   height: 100vh;
   background-color: #f5f5f5;
+  overflow: hidden;
 }
 
 .header {
@@ -35,13 +36,34 @@ $border: 1px solid #dfdfdf;
 .main {
   height: calc(100% - $headerHeight);
   position: relative;
+  background: #f4f6f5;
+  overflow: hidden;
+}
+
+.workbench {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  background: #f4f6f5;
+}
+
+.resultDock {
+  width: min(1080px, calc(100% - 48px));
+  margin: -40px auto 56px;
+  position: relative;
+  z-index: 3;
+
+  @media (max-width: 900px) {
+    width: calc(100% - 24px);
+    margin: -24px auto 28px;
+  }
 }
 
 .status {
-  padding-left: 16px !important;
+  padding-left: 32px !important;
 }
 .action {
-  padding-right: 16px !important;
+  padding-right: 32px !important;
 }
 
 .name {
@@ -56,12 +78,26 @@ $border: 1px solid #dfdfdf;
   word-wrap: break-word;
   word-break: break-all;
   white-space: normal;
+  color: #3f4652;
+  line-height: 1.35;
+}
+
+.fileMeta {
+  margin-top: 8px;
+
+  :global(.ant-tag) {
+    margin-inline-end: 0;
+    border: 0;
+    background: #eaf8ef;
+    color: #158f5c;
+    font-weight: 700;
+  }
 }
 
 .preview {
   font-size: 0;
-  width: 50px;
-  height: 50px;
+  width: 72px;
+  height: 72px;
   position: relative;
   overflow: hidden;
   img {
@@ -93,26 +129,152 @@ $border: 1px solid #dfdfdf;
 }
 
 .content {
-  $h1: 60px;
-  $h3: 60px;
-  height: 100%;
-  overflow: hidden;
+  overflow: visible;
   flex-grow: 1;
-  > div:nth-child(1) {
-    height: $h1;
-    border-bottom: $border;
-    background-color: #fafafa;
-    padding: 0 16px;
+  background:
+    linear-gradient(180deg, rgba(18, 54, 34, 0.08), rgba(255, 255, 255, 0) 170px),
+    #f4f6f5;
+}
+
+.resultHero {
+  min-height: 126px;
+  margin: 0;
+  padding: 24px 36px;
+  border-radius: 10px 10px 0 0;
+  background: #404755;
+  box-shadow: 0 18px 45px rgba(35, 43, 54, 0.18);
+  position: relative;
+  z-index: 1;
+
+  h2 {
+    color: #8dd336;
+    margin: 0 0 12px;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: 0;
   }
-  > div:nth-child(2) {
-    flex: 1;
-    height: calc(100% - $h1 - $h3);
+
+  :global(.ant-btn-primary) {
+    min-width: 160px;
+    background: #8ad130;
+    border-color: #8ad130;
+    color: #fff;
+    font-weight: 700;
+    box-shadow: none;
+
+    &:hover {
+      background: #78c525 !important;
+      border-color: #78c525 !important;
+    }
   }
-  > div:nth-child(3) {
-    height: $h3;
-    border-top: $border;
-    padding: 0 16px;
-    background-color: #fafafa;
+
+  @media (max-width: 900px) {
+    align-items: flex-start !important;
+    flex-direction: column;
+    gap: 18px;
+    margin: 0;
+    padding: 20px;
+
+    h2 {
+      font-size: 24px;
+    }
+  }
+}
+
+.resultCopy {
+  min-width: 0;
+
+  > span {
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.heroActions {
+  justify-content: flex-end;
+}
+
+.menu {
+  min-height: 62px;
+  margin: 0;
+  padding: 0 36px;
+  border: 1px solid #eef0ef;
+  border-top: 0;
+  background: #fff;
+
+  @media (max-width: 900px) {
+    padding: 10px 12px;
+  }
+}
+
+.tablePanel {
+  margin: 0;
+  background: #fff;
+  border-left: 1px solid #eef0ef;
+  border-right: 1px solid #eef0ef;
+  overflow-x: auto;
+
+  :global(.ant-table) {
+    background: #fff;
+  }
+
+  :global(.ant-table-thead > tr > th) {
+    background: #fbfcfb;
+    color: #3e4450;
+    font-weight: 700;
+  }
+
+  :global(.ant-table-tbody > tr > td) {
+    padding-top: 14px;
+    padding-bottom: 14px;
+    border-bottom-color: #ecefed;
+  }
+
+  :global(.ant-table-tbody > tr:hover > td) {
+    background: #f8fbf9;
+  }
+
+  :global(.ant-table-wrapper) {
+    min-width: 720px;
+  }
+}
+
+.footerBar {
+  min-height: 68px;
+  margin: 0;
+  padding: 0 36px;
+  background: #404755;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 -10px 30px rgba(35, 43, 54, 0.08);
+
+  :global(.ant-typography),
+  :global(.ant-typography-secondary) {
+    color: rgba(255, 255, 255, 0.86) !important;
+  }
+
+  :global(.ant-progress-text) {
+    color: #fff !important;
+  }
+
+  :global(.ant-btn-primary) {
+    min-width: 170px;
+    background: #8ad130;
+    border-color: #8ad130;
+    color: #fff;
+    font-weight: 700;
+
+    &:hover {
+      background: #78c525 !important;
+      border-color: #78c525 !important;
+    }
+  }
+
+  @media (max-width: 900px) {
+    gap: 12px;
+    align-items: flex-start !important;
+    flex-direction: column;
+    padding: 12px;
   }
 }
 

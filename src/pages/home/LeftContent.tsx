@@ -1,98 +1,80 @@
-import { Button, Flex, Space, Table } from "antd";
+import { Button, Flex, Space, Table, Typography } from "antd";
 import style from "./index.module.scss";
 import { observer } from "mobx-react-lite";
 import {
   ClearOutlined,
   CompressOutlined,
   DownloadOutlined,
-  FolderAddOutlined,
-  PlusOutlined,
-  ReloadOutlined,
-  SettingOutlined,
 } from "@ant-design/icons";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { ImageInput } from "@/components/ImageInput";
+import { useCallback } from "react";
 import { gstate } from "@/global";
 import { homeState } from "@/states/home";
 import {
   createDownload,
-  getFilesFromHandle,
+  formatSize,
   getOutputFileName,
   getUniqNameOnNames,
 } from "@/functions";
 import { ProgressHint } from "@/components/ProgressHint";
-import { createImageList } from "@/engines/transform";
 import { useColumn } from "./useColumn";
 import { useResponse } from "@/media";
 
 export const LeftContent = observer(() => {
   const { isMobile } = useResponse();
   const disabled = homeState.hasTaskRunning();
-  const fileRef = useRef<HTMLInputElement>(null);
   const columns = useColumn(disabled);
+  const progressInfo = homeState.getProgressHintInfo();
+  const isComplete =
+    progressInfo.totalNum > 0 && progressInfo.loadedNum === progressInfo.totalNum;
+  const savingText = progressInfo.rate.toFixed(2);
   const firstCompleted = Array.from(homeState.list.values()).find(
     (item) => item.preview && item.compress,
   );
 
-  const scrollBoxRef = useRef<HTMLDivElement>(null);
-  const [scrollHeight, setScrollHeight] = useState<number>(0);
-  const resize = useCallback(() => {
-    const element = scrollBoxRef.current;
-    if (element) {
-      const boxHeight = element.getBoundingClientRect().height;
-      const th = document.querySelector(".ant-table-thead");
-      const tbody = document.querySelector(".ant-table-tbody");
-      const thHeight = th?.getBoundingClientRect().height ?? 0;
-      const tbodyHeight = tbody?.getBoundingClientRect().height ?? 0;
-      if (boxHeight > thHeight + tbodyHeight) {
-        setScrollHeight(0);
-      } else {
-        setScrollHeight(boxHeight - thHeight);
+  const downloadZip = useCallback(async () => {
+    gstate.loading = true;
+    try {
+      const jszip = await import("jszip");
+      const zip = new jszip.default();
+      const names: Set<string> = new Set();
+      /* eslint-disable @typescript-eslint/no-unused-vars */
+      for (const [_, info] of homeState.list) {
+        const fileName = getOutputFileName(info, homeState.option);
+        const uniqName = getUniqNameOnNames(names, fileName);
+        names.add(uniqName);
+        if (info.compress?.blob) {
+          zip.file(uniqName, info.compress.blob);
+        }
       }
+      const result = await zip.generateAsync({
+        type: "blob",
+        compression: "DEFLATE",
+        compressionOptions: {
+          level: 6,
+        },
+      });
+      createDownload("frog-compress.zip", result);
+    } finally {
+      gstate.loading = false;
     }
   }, []);
 
-  /* eslint-disable react-hooks/exhaustive-deps */
-  // Everytime list change, recalc the scroll height
-  useEffect(resize, [homeState.list.size]);
-
-  useEffect(() => {
-    window.addEventListener("resize", resize);
-    return () => {
-      window.removeEventListener("resize", resize);
-    };
-  }, [resize]);
-
   return (
     <Flex align="stretch" vertical className={style.content}>
-      <Flex align="center" justify="space-between" className={style.menu}>
-        <Space>
-          <Button
-            disabled={disabled}
-            icon={<PlusOutlined />}
-            type="primary"
-            onClick={() => {
-              fileRef.current?.click();
-            }}
-          >
-            {!isMobile && gstate.locale?.listAction.batchAppend}
-          </Button>
-          {window.showDirectoryPicker && (
-            <Button
-              disabled={disabled}
-              icon={<FolderAddOutlined />}
-              type="primary"
-              onClick={async () => {
-                const handle = await window.showDirectoryPicker!();
-                const result = await getFilesFromHandle(handle);
-                await createImageList(result);
-              }}
-            >
-              {!isMobile && gstate.locale?.listAction.addFolder}
-            </Button>
-          )}
-        </Space>
-        <Space>
+      <Flex align="center" justify="space-between" className={style.resultHero}>
+        <div className={style.resultCopy}>
+          <Typography.Title level={2}>
+            {isComplete
+              ? `${gstate.locale?.logo ?? "青蛙压缩"}已帮你节省 ${savingText}%`
+              : `正在压缩...（${progressInfo.loadedNum}/${progressInfo.totalNum}）`}
+          </Typography.Title>
+          <Typography.Text>
+            {progressInfo.totalNum} 张图片已优化&nbsp;&nbsp;|&nbsp;&nbsp;原图{" "}
+            {formatSize(progressInfo.originSize)}
+            &nbsp;→&nbsp;压缩后 {formatSize(progressInfo.outputSize)}
+          </Typography.Text>
+        </div>
+        <Space wrap className={style.heroActions}>
           {firstCompleted && (
             <Button
               disabled={disabled || homeState.isCropMode()}
@@ -105,18 +87,9 @@ export const LeftContent = observer(() => {
             </Button>
           )}
           <Button
-            icon={<SettingOutlined />}
-            onClick={() => {
-              homeState.showOption = true;
-            }}
-          >
-            {!isMobile && gstate.locale?.optionPannel.advancedSettings}
-          </Button>
-          <Button
             disabled={disabled}
             icon={<ClearOutlined />}
             danger
-            type="primary"
             onClick={() => {
               homeState.clear();
             }}
@@ -124,62 +97,38 @@ export const LeftContent = observer(() => {
             {!isMobile && gstate.locale?.listAction.clear}
           </Button>
           <Button
-            disabled={disabled}
-            icon={<ReloadOutlined />}
-            type="primary"
-            onClick={async () => {
-              homeState.reCompress();
-            }}
-          >
-            {gstate.locale?.listAction.reCompress}
-          </Button>
-          <Button
             icon={<DownloadOutlined />}
             type="primary"
+            size="large"
             disabled={disabled}
-            onClick={async () => {
-              gstate.loading = true;
-              const jszip = await import("jszip");
-              const zip = new jszip.default();
-              const names: Set<string> = new Set();
-              /* eslint-disable @typescript-eslint/no-unused-vars */
-              for (const [_, info] of homeState.list) {
-                const fileName = getOutputFileName(info, homeState.option);
-                const uniqName = getUniqNameOnNames(names, fileName);
-                names.add(uniqName);
-                if (info.compress?.blob) {
-                  zip.file(uniqName, info.compress.blob);
-                }
-              }
-              const result = await zip.generateAsync({
-                type: "blob",
-                compression: "DEFLATE",
-                compressionOptions: {
-                  level: 6,
-                },
-              });
-              createDownload("frog-compress.zip", result);
-              gstate.loading = false;
-            }}
+            onClick={downloadZip}
           >
             {!isMobile &&
               (gstate.locale?.listAction.downloadZip ??
                 gstate.locale?.listAction.downloadAll)}
           </Button>
         </Space>
-        <ImageInput ref={fileRef} />
       </Flex>
-      <div ref={scrollBoxRef}>
+      <div className={style.tablePanel}>
         <Table
           columns={columns}
           size="small"
           pagination={false}
-          scroll={scrollHeight ? { y: scrollHeight } : undefined}
           dataSource={Array.from(homeState.list.values())}
         />
       </div>
-      <Flex align="center">
+      <Flex align="center" justify="space-between" className={style.footerBar}>
         <ProgressHint />
+        <Button
+          icon={<DownloadOutlined />}
+          type="primary"
+          size="large"
+          disabled={disabled}
+          onClick={downloadZip}
+        >
+          {gstate.locale?.listAction.downloadZip ??
+            gstate.locale?.listAction.downloadAll}
+        </Button>
       </Flex>
     </Flex>
   );

@@ -1,4 +1,4 @@
-import { Flex, Space, Tooltip, Typography, message, theme } from "antd";
+import { Flex, Space, Tag, Tooltip, Typography, message, theme } from "antd";
 import style from "./index.module.scss";
 import { TableProps } from "antd/es/table";
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
@@ -79,10 +79,19 @@ export function useColumn(disabled: boolean) {
       dataIndex: "name",
       title: gstate.locale?.columnTitle.name,
       render(_, row) {
+        const suffix = row.name.split(".").pop()?.toUpperCase() || row.blob.type;
         return (
-          <Typography.Text title={row.name} className={style.name}>
-            {row.name}
-          </Typography.Text>
+          <div>
+            <Typography.Text title={row.name} className={style.name} strong>
+              {row.name}
+            </Typography.Text>
+            <Flex align="center" gap={8} className={style.fileMeta}>
+              <Tag color="green">{suffix}</Tag>
+              <Typography.Text type="secondary">
+                {formatSize(row.blob.size)}
+              </Typography.Text>
+            </Flex>
+          </div>
         );
       },
     });
