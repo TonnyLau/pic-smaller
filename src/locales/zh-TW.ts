@@ -2,6 +2,7 @@
 
 import { LocaleData } from "@/type";
 import zhTW from "antd/locale/zh_TW";
+import { getLandingContent } from "./homeComparison";
 
 const localeData: LocaleData = {
   antLocale: zhTW,
@@ -42,6 +43,7 @@ const localeData: LocaleData = {
           "一次加入多張圖片，完成後可單張下載，也可以打包儲存到本機。",
       },
     ],
+    ...getLandingContent("zh-TW"),
     workflow: {
       eyebrow: "如何使用",
       title: "三步完成圖片瘦身",

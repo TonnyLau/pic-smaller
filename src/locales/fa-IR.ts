@@ -1,5 +1,6 @@
 import { LocaleData } from "@/type";
 import faIR from "antd/locale/fa_IR";
+import { getLandingContent } from "./homeComparison";
 
 const localeData: LocaleData = {
   antLocale: faIR,
@@ -41,6 +42,7 @@ const localeData: LocaleData = {
           "چند تصویر را هم‌زمان اضافه کنید، نتیجه‌ها را جداگانه دانلود کنید یا همه را در یک فایل zip ذخیره کنید.",
       },
     ],
+    ...getLandingContent("fa-IR"),
     workflow: {
       eyebrow: "روش استفاده",
       title: "کوچک کردن تصویر در سه مرحله",

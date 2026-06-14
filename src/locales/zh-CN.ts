@@ -1,5 +1,6 @@
 import { LocaleData } from "@/type";
 import zhCN from "antd/locale/zh_CN";
+import { getLandingContent } from "./homeComparison";
 
 const localeData: LocaleData = {
   antLocale: zhCN,
@@ -40,6 +41,7 @@ const localeData: LocaleData = {
           "一次添加多张图片，压缩完成后可单张下载，也可以打包保存到本地。",
       },
     ],
+    ...getLandingContent("zh-CN"),
     workflow: {
       eyebrow: "怎么用",
       title: "三步完成图片瘦身",

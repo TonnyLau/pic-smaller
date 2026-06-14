@@ -3,7 +3,9 @@ import style from "./index.module.scss";
 import { observer } from "mobx-react-lite";
 import { Logo } from "@/components/Logo";
 import {
+  CheckCircleFilled,
   EyeOutlined,
+  CloseCircleFilled,
   InboxOutlined,
   MenuOutlined,
   SafetyCertificateOutlined,
@@ -52,6 +54,97 @@ const LandingSections = observer(() => {
           </article>
         ))}
       </div>
+
+      <section className={style.trustSection} aria-labelledby="trust-title">
+        <div className={style.sectionIntro}>
+          <Typography.Title id="trust-title" level={2}>
+            {content.trust.title}
+          </Typography.Title>
+          <Typography.Paragraph>{content.trust.description}</Typography.Paragraph>
+        </div>
+        <div className={style.brandWall}>
+          {content.trust.companies.map((company) => (
+            <div className={style.brandTile} key={company}>
+              {company}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section
+        className={style.comparisonSection}
+        aria-labelledby="comparison-title"
+      >
+        <div className={style.sectionIntro}>
+          <Typography.Title id="comparison-title" level={2}>
+            {content.comparison.title}
+          </Typography.Title>
+          <Typography.Paragraph>
+            {content.comparison.description}
+          </Typography.Paragraph>
+        </div>
+        <div className={style.comparisonScroller}>
+          <table className={style.comparisonTable}>
+            <thead>
+              <tr>
+                {content.comparison.columns.map((column) => (
+                  <th key={column}>{column}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {content.comparison.rows.map((row) => (
+                <tr key={row.feature}>
+                  <th scope="row">{row.feature}</th>
+                  <td className={style.supportCell}>
+                    <span
+                      className={
+                        row.frog ? style.supportYes : style.supportNo
+                      }
+                      aria-label={row.frog ? "Supported" : "Not supported"}
+                      title={row.frog ? "Supported" : "Not supported"}
+                    >
+                      {row.frog ? <CheckCircleFilled /> : <CloseCircleFilled />}
+                    </span>
+                  </td>
+                  <td className={style.supportCell}>
+                    <span
+                      className={
+                        row.tinyPng ? style.supportYes : style.supportNo
+                      }
+                      aria-label={row.tinyPng ? "Supported" : "Not supported"}
+                      title={row.tinyPng ? "Supported" : "Not supported"}
+                    >
+                      {row.tinyPng ? (
+                        <CheckCircleFilled />
+                      ) : (
+                        <CloseCircleFilled />
+                      )}
+                    </span>
+                  </td>
+                  <td className={style.supportCell}>
+                    <span
+                      className={
+                        row.compressor ? style.supportYes : style.supportNo
+                      }
+                      aria-label={
+                        row.compressor ? "Supported" : "Not supported"
+                      }
+                      title={row.compressor ? "Supported" : "Not supported"}
+                    >
+                      {row.compressor ? (
+                        <CheckCircleFilled />
+                      ) : (
+                        <CloseCircleFilled />
+                      )}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
 
       <div className={style.workflowBand}>
         <div>

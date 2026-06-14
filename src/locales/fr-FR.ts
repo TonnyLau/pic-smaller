@@ -1,5 +1,6 @@
 import { LocaleData } from "@/type";
 import frFR from "antd/locale/fr_FR";
+import { getLandingContent } from "./homeComparison";
 
 const localeData: LocaleData = {
   antLocale: frFR,
@@ -41,6 +42,7 @@ const localeData: LocaleData = {
           "Ajoutez plusieurs images à la fois, téléchargez chaque résultat ou enregistrez tout dans un fichier zip.",
       },
     ],
+    ...getLandingContent("fr-FR"),
     workflow: {
       eyebrow: "Comment ça marche",
       title: "Compressez vos images en trois étapes",

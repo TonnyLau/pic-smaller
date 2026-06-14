@@ -19,6 +19,22 @@ export interface LocaleData {
       title: string;
       description: string;
     }>;
+    trust: {
+      title: string;
+      description: string;
+      companies: string[];
+    };
+    comparison: {
+      title: string;
+      description: string;
+      columns: [string, string, string, string];
+      rows: Array<{
+        feature: string;
+        frog: boolean;
+        tinyPng: boolean;
+        compressor: boolean;
+      }>;
+    };
     workflow: {
       eyebrow: string;
       title: string;

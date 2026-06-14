@@ -29,12 +29,40 @@ test("all locales provide flat SEO home content", () => {
     expect(locale.homeContent.intro.title.length).toBeGreaterThan(0);
     expect(locale.homeContent.intro.description.length).toBeGreaterThan(0);
     expect(locale.homeContent.features).toHaveLength(4);
+    expect(locale.homeContent).toHaveProperty("trust");
+    expect(locale.homeContent).toHaveProperty("comparison");
     expect(locale.homeContent.steps).toHaveLength(3);
     expect(locale.homeContent.faqs).toHaveLength(3);
 
     for (const feature of locale.homeContent.features) {
       expect(feature.title.length).toBeGreaterThan(0);
       expect(feature.description.length).toBeGreaterThan(0);
+    }
+
+    expect(locale.homeContent.trust.title.length).toBeGreaterThan(0);
+    expect(locale.homeContent.trust.description.length).toBeGreaterThan(0);
+    expect(locale.homeContent.trust.companies).toEqual([
+      "Airbnb",
+      "Spotify",
+      "Netflix",
+      "Uber",
+      "Dropbox",
+      "Slack",
+    ]);
+
+    expect(locale.homeContent.comparison.title.length).toBeGreaterThan(0);
+    expect(locale.homeContent.comparison.description.length).toBeGreaterThan(0);
+    expect(locale.homeContent.comparison.columns).toHaveLength(4);
+    for (const column of locale.homeContent.comparison.columns) {
+      expect(column.length).toBeGreaterThan(0);
+    }
+    expect(locale.homeContent.comparison.rows).toHaveLength(6);
+
+    for (const row of locale.homeContent.comparison.rows) {
+      expect(row.feature.length).toBeGreaterThan(0);
+      expect(typeof row.frog).toBe("boolean");
+      expect(typeof row.tinyPng).toBe("boolean");
+      expect(typeof row.compressor).toBe("boolean");
     }
 
     for (const faq of locale.homeContent.faqs) {

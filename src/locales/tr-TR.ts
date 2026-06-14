@@ -1,5 +1,6 @@
 import { LocaleData } from "@/type";
 import trTR from "antd/locale/tr_TR";
+import { getLandingContent } from "./homeComparison";
 
 const localeData: LocaleData = {
   antLocale: trTR,
@@ -41,6 +42,7 @@ const localeData: LocaleData = {
           "Birden fazla görsel ekleyin, tek tek indirin veya tüm sonuçları zip olarak kaydedin.",
       },
     ],
+    ...getLandingContent("tr-TR"),
     workflow: {
       eyebrow: "Nasıl çalışır",
       title: "Görselleri üç adımda küçültün",

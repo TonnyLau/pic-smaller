@@ -2,6 +2,7 @@
 
 import { LocaleData } from "@/type";
 import jaJP from "antd/locale/ja_JP";
+import { getLandingContent } from "./homeComparison";
 
 const localeData: LocaleData = {
   antLocale: jaJP,
@@ -43,6 +44,7 @@ const localeData: LocaleData = {
           "複数の画像を一度に追加し、個別にダウンロードすることも、zip でまとめて保存することもできます。",
       },
     ],
+    ...getLandingContent("ja-JP"),
     workflow: {
       eyebrow: "使い方",
       title: "3ステップで画像を軽量化",

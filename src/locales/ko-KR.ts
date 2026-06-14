@@ -2,6 +2,7 @@
 
 import { LocaleData } from "@/type";
 import koKR from "antd/locale/ko_KR";
+import { getLandingContent } from "./homeComparison";
 
 const localeData: LocaleData = {
   antLocale: koKR,
@@ -43,6 +44,7 @@ const localeData: LocaleData = {
           "여러 이미지를 한 번에 추가하고, 개별 결과를 다운로드하거나 zip 파일로 저장할 수 있습니다.",
       },
     ],
+    ...getLandingContent("ko-KR"),
     workflow: {
       eyebrow: "사용 방법",
       title: "세 단계로 이미지 줄이기",

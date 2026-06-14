@@ -1,5 +1,6 @@
 import { LocaleData } from "@/type";
 import enUS from "antd/locale/en_US";
+import { getLandingContent } from "./homeComparison";
 
 const localeData: LocaleData = {
   antLocale: enUS,
@@ -41,6 +42,7 @@ const localeData: LocaleData = {
           "Add multiple images at once, download individual results, or save everything as one zip file.",
       },
     ],
+    ...getLandingContent("en-US"),
     workflow: {
       eyebrow: "How it works",
       title: "Shrink images in three steps",
