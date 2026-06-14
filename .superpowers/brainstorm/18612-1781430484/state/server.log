@@ -1,0 +1,3 @@
+{"type":"server-started","port":52341,"host":"0.0.0.0","url_host":"127.0.0.1","url":"http://127.0.0.1:52341","screen_dir":"E:\\project\\ship\\pic-smaller\\.superpowers\\brainstorm\\18612-1781430484\\content","state_dir":"E:\\project\\ship\\pic-smaller\\.superpowers\\brainstorm\\18612-1781430484\\state"}
+{"type":"screen-added","file":"E:\\project\\ship\\pic-smaller\\.superpowers\\brainstorm\\18612-1781430484\\content\\homepage-trust-compare-layout.html"}
+{"type":"server-stopped","reason":"idle timeout"}
