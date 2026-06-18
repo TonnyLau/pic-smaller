@@ -1,8 +1,148 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://compresspic.top/</loc>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://compresspic.top/"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://compresspic.top/en-US/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://compresspic.top/zh-TW/"/>
+    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://compresspic.top/ja-JP/"/>
+    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://compresspic.top/ko-KR/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://compresspic.top/fr-FR/"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://compresspic.top/es-ES/"/>
+    <xhtml:link rel="alternate" hreflang="tr-TR" href="https://compresspic.top/tr-TR/"/>
+    <xhtml:link rel="alternate" hreflang="fa-IR" href="https://compresspic.top/fa-IR/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://compresspic.top/"/>
+  </url>
+  <url>
+    <loc>https://compresspic.top/en-US/</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://compresspic.top/"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://compresspic.top/en-US/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://compresspic.top/zh-TW/"/>
+    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://compresspic.top/ja-JP/"/>
+    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://compresspic.top/ko-KR/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://compresspic.top/fr-FR/"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://compresspic.top/es-ES/"/>
+    <xhtml:link rel="alternate" hreflang="tr-TR" href="https://compresspic.top/tr-TR/"/>
+    <xhtml:link rel="alternate" hreflang="fa-IR" href="https://compresspic.top/fa-IR/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://compresspic.top/"/>
+  </url>
+  <url>
+    <loc>https://compresspic.top/zh-TW/</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://compresspic.top/"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://compresspic.top/en-US/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://compresspic.top/zh-TW/"/>
+    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://compresspic.top/ja-JP/"/>
+    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://compresspic.top/ko-KR/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://compresspic.top/fr-FR/"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://compresspic.top/es-ES/"/>
+    <xhtml:link rel="alternate" hreflang="tr-TR" href="https://compresspic.top/tr-TR/"/>
+    <xhtml:link rel="alternate" hreflang="fa-IR" href="https://compresspic.top/fa-IR/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://compresspic.top/"/>
+  </url>
+  <url>
+    <loc>https://compresspic.top/ja-JP/</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://compresspic.top/"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://compresspic.top/en-US/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://compresspic.top/zh-TW/"/>
+    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://compresspic.top/ja-JP/"/>
+    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://compresspic.top/ko-KR/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://compresspic.top/fr-FR/"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://compresspic.top/es-ES/"/>
+    <xhtml:link rel="alternate" hreflang="tr-TR" href="https://compresspic.top/tr-TR/"/>
+    <xhtml:link rel="alternate" hreflang="fa-IR" href="https://compresspic.top/fa-IR/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://compresspic.top/"/>
+  </url>
+  <url>
+    <loc>https://compresspic.top/ko-KR/</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://compresspic.top/"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://compresspic.top/en-US/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://compresspic.top/zh-TW/"/>
+    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://compresspic.top/ja-JP/"/>
+    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://compresspic.top/ko-KR/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://compresspic.top/fr-FR/"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://compresspic.top/es-ES/"/>
+    <xhtml:link rel="alternate" hreflang="tr-TR" href="https://compresspic.top/tr-TR/"/>
+    <xhtml:link rel="alternate" hreflang="fa-IR" href="https://compresspic.top/fa-IR/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://compresspic.top/"/>
+  </url>
+  <url>
+    <loc>https://compresspic.top/fr-FR/</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://compresspic.top/"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://compresspic.top/en-US/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://compresspic.top/zh-TW/"/>
+    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://compresspic.top/ja-JP/"/>
+    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://compresspic.top/ko-KR/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://compresspic.top/fr-FR/"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://compresspic.top/es-ES/"/>
+    <xhtml:link rel="alternate" hreflang="tr-TR" href="https://compresspic.top/tr-TR/"/>
+    <xhtml:link rel="alternate" hreflang="fa-IR" href="https://compresspic.top/fa-IR/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://compresspic.top/"/>
+  </url>
+  <url>
+    <loc>https://compresspic.top/es-ES/</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://compresspic.top/"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://compresspic.top/en-US/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://compresspic.top/zh-TW/"/>
+    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://compresspic.top/ja-JP/"/>
+    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://compresspic.top/ko-KR/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://compresspic.top/fr-FR/"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://compresspic.top/es-ES/"/>
+    <xhtml:link rel="alternate" hreflang="tr-TR" href="https://compresspic.top/tr-TR/"/>
+    <xhtml:link rel="alternate" hreflang="fa-IR" href="https://compresspic.top/fa-IR/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://compresspic.top/"/>
+  </url>
+  <url>
+    <loc>https://compresspic.top/tr-TR/</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://compresspic.top/"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://compresspic.top/en-US/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://compresspic.top/zh-TW/"/>
+    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://compresspic.top/ja-JP/"/>
+    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://compresspic.top/ko-KR/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://compresspic.top/fr-FR/"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://compresspic.top/es-ES/"/>
+    <xhtml:link rel="alternate" hreflang="tr-TR" href="https://compresspic.top/tr-TR/"/>
+    <xhtml:link rel="alternate" hreflang="fa-IR" href="https://compresspic.top/fa-IR/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://compresspic.top/"/>
+  </url>
+  <url>
+    <loc>https://compresspic.top/fa-IR/</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://compresspic.top/"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://compresspic.top/en-US/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://compresspic.top/zh-TW/"/>
+    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://compresspic.top/ja-JP/"/>
+    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://compresspic.top/ko-KR/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://compresspic.top/fr-FR/"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://compresspic.top/es-ES/"/>
+    <xhtml:link rel="alternate" hreflang="tr-TR" href="https://compresspic.top/tr-TR/"/>
+    <xhtml:link rel="alternate" hreflang="fa-IR" href="https://compresspic.top/fa-IR/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://compresspic.top/"/>
   </url>
 </urlset>

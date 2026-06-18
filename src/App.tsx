@@ -19,8 +19,18 @@ function useMobileVConsole() {
   }, [isMobile]);
 }
 
+function useHtmlLangSync() {
+  // Belt-and-braces: the router's applyLang already sets <html lang/dir>;
+  // this effect re-asserts whenever gstate.lang changes (e.g. on first paint).
+  useEffect(() => {
+    document.documentElement.lang = gstate.lang ?? "zh-CN";
+    document.documentElement.dir = gstate.lang === "fa-IR" ? "rtl" : "ltr";
+  }, [gstate.lang]);
+}
+
 export const App = observer(() => {
   useMobileVConsole();
+  useHtmlLangSync();
 
   return (
     <ConfigProvider
