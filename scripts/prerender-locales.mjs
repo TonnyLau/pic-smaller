@@ -26,7 +26,7 @@ const LOCALES = [
   "tr-TR",
   "fa-IR",
 ];
-const DEFAULT_LOCALE = "zh-CN";
+const DEFAULT_LOCALE = "en-US";
 const SITE_URL = "https://compresspic.top";
 const OG_IMAGE_WEBP = "/assets/frog-hero-bg-1600.webp";
 const HERO_W = 1600;
@@ -242,6 +242,16 @@ async function main() {
     console.log(
       `prerender: ${lang} → ${outFile.replace(DIST + "\\", "dist/")} (${(html.length / 1024).toFixed(1)} KB)`,
     );
+    // The default locale also needs to be served at /<lang>/ (e.g. /en-US/) for
+    // platform auto-extension-stripping (Cloudflare Pages) and the nginx
+    // rewrite rule. Write a redundant copy with the same content.
+    if (lang === DEFAULT_LOCALE) {
+      const mirrorFile = join(DIST, `${lang}.html`);
+      await writeFile(mirrorFile, html);
+      console.log(
+        `prerender: ${lang} → ${mirrorFile.replace(DIST + "\\", "dist/")} (${(html.length / 1024).toFixed(1)} KB, mirror)`,
+      );
+    }
   }
 }
 

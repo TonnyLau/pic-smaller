@@ -5,7 +5,7 @@ import { locales } from "./modules";
 import { history } from "./router";
 
 const localeCacheKey = "Pic-Smaller-Locale";
-export const defaultLang = "zh-CN";
+export const defaultLang = "en-US";
 
 export const langList: NonNullable<MenuProps["items"]> = [
   { key: "en-US", label: "English" },

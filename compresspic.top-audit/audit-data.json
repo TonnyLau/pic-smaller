@@ -1,0 +1,558 @@
+{
+  "summary": {
+    "url": "https://www.compresspic.top/",
+    "domain": "compresspic.top",
+    "audit_date": "2026-06-22",
+    "health_score": 72,
+    "business_type": "Free web-based SaaS tool (image compression, browser-only / privacy-first)",
+    "stack": "Cloudflare (CDN/WAF), React SPA + Vite, static prerender per locale, GA4",
+    "indexable_pages": 9,
+    "locales": ["zh-CN", "en-US", "zh-TW", "ja-JP", "ko-KR", "fr-FR", "es-ES", "tr-TR", "fa-IR"],
+    "top_findings": [
+      {
+        "title": "Canonical uses non-www but server serves www",
+        "severity": "Critical",
+        "impact": "Both www.compresspic.top and compresspic.top return 200 with self-referencing canonicals — Google has to pick one and may flip-flop. Both get indexed as duplicate."
+      },
+      {
+        "title": "Trailing-slash 307 redirect mismatches canonical/sitemap",
+        "severity": "High",
+        "impact": "Canonical/sitemap declare /en-US/ but server 307s to /en-US (no slash). Crawl budget waste and canonical-target inaccessibility."
+      },
+      {
+        "title": "All unknown URLs return 200 (SPA shell fallback, no 404)",
+        "severity": "High",
+        "impact": "Tested /about, /privacy, /blog, /random all return 200 with the homepage HTML. Search engines may index phantom pages. 404.html exists locally but isn't served."
+      },
+      {
+        "title": "No llms.txt (route returns SPA shell)",
+        "severity": "High",
+        "impact": "/llms.txt returns the SPA HTML, not a real llms.txt. LLM crawlers (Anthropic, OpenAI, Cursor) get garbage when they follow the llmstxt.org convention."
+      },
+      {
+        "title": "SoftwareApplication schema missing author, datePublished, softwareVersion",
+        "severity": "Medium",
+        "impact": "Google cannot link this app to its author identity. No version metadata. Limits Knowledge Graph eligibility."
+      }
+    ],
+    "quick_wins": [
+      "Add <link rel='preload' as='image' href='/assets/frog-hero-bg-1600.webp'> to <head> — saves 200–500ms LCP",
+      "Long-cache /assets/* with Cache-Control: public, max-age=31536000, immutable",
+      "Expand zh-CN/zh-TW/ja-JP meta descriptions from 45/43/74 chars to 90–120 chars",
+      "Create a real /llms.txt with a plain-text site description",
+      "Add Organization schema linking to github.com/joye61/pic-smaller"
+    ]
+  },
+  "categories": [
+    {
+      "name": "Technical SEO",
+      "weight": 0.22,
+      "score": 60,
+      "what_works": [
+        "HTTPS enforced via Cloudflare",
+        "robots.txt properly configured with sitemap reference",
+        "Sitemap exists with all 9 locales",
+        "Cloudflare CDN with HTTP/2 + alt-svc (HTTP/3) enabled",
+        "AI-training opt-out via Content-Signal header (search=yes,ai-train=no)",
+        "WASM assets blocked from crawling (Disallow: /assets/*.wasm$)"
+      ],
+      "findings": [
+        {
+          "title": "Canonical/www mismatch (no-www canonical but www server)",
+          "severity": "Critical",
+          "description": "Every page's <link rel='canonical'> and hreflang alternates use https://compresspic.top/... (no www). The server actually responds at https://www.compresspic.top/... and 200s the no-www version too (no redirect). Each version has a self-referencing canonical, so both are indexable as duplicates.",
+          "recommendation": "Choose one host. Recommended: keep www as canonical (it's where users land), set Cloudflare redirect rule compresspic.top/* -> 301 -> https://www.compresspic.top/:splat. Update canonical, hreflang, sitemap <loc>, OG/Twitter URLs to www.compresspic.top."
+        },
+        {
+          "title": "Trailing-slash 307 redirect mismatches canonical/sitemap",
+          "severity": "High",
+          "description": "https://www.compresspic.top/en-US/ returns 307 -> https://www.compresspic.top/en-US (stripping slash). Sitemap and canonical declare URLs WITH trailing slash (https://compresspic.top/en-US/). Google fetches the canonical URL, gets a 307 redirect before landing on the actual content.",
+          "recommendation": "Pick a canonical slash form. Either: (a) remove the 307 redirect, redirect the reverse (/en-US -> /en-US/) and keep canonical with slash, or (b) keep the no-slash form and update canonical + sitemap to /en-US."
+        },
+        {
+          "title": "All unknown paths return 200 with SPA shell (no 404)",
+          "severity": "High",
+          "description": "/about, /privacy, /terms, /contact, /blog, /help, /random-nonexistent-page all return HTTP 200 with the index.html shell (5377 bytes). The dist/404.html file exists locally but is not served.",
+          "recommendation": "Configure Cloudflare Pages or Worker: any path not matching the locale pattern (^/$ or ^/(en-US|zh-TW|ja-JP|ko-KR|fr-FR|es-ES|tr-TR|fa-IR)$) should serve 404.html with HTTP 404 status. This prevents phantom pages from being indexed."
+        },
+        {
+          "title": "No security headers (CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy)",
+          "severity": "Medium",
+          "description": "Response headers include only content-type, cache-control, cf-*, nel, report-to, server, alt-svc. No CSP, X-Frame-Options, X-Content-Type-Options: nosniff, Referrer-Policy, Permissions-Policy.",
+          "recommendation": "Add via Cloudflare Transform Rules: X-Content-Type-Options: nosniff, Referrer-Policy: strict-origin-when-cross-origin, X-Frame-Options: DENY, Permissions-Policy: camera=(), microphone=(), geolocation=(). For CSP, a strict policy is hard with GA + WASM + Antd CSS-in-JS — start with report-only mode."
+        },
+        {
+          "title": "Static asset cache-control is max-age=0",
+          "severity": "Medium",
+          "description": "Every response, including content-hashed assets (index-CyHHZpPs.js, frog-hero-bg-1600.webp), returns cache-control: public, max-age=0, must-revalidate. Returning users revalidate every request.",
+          "recommendation": "Split caching: /assets/* -> public, max-age=31536000, immutable (filenames are hashed). HTML/robots.txt/sitemap.xml -> public, max-age=300 (so updates propagate fast)."
+        }
+      ]
+    },
+    {
+      "name": "Content Quality",
+      "weight": 0.23,
+      "score": 70,
+      "what_works": [
+        "Clear, factual product description across all 9 locales",
+        "Privacy-first positioning is consistent in title, description, JSON-LD, and FAQ",
+        "Pre-render pipeline per locale (scripts/prerender-locales.mjs) — each locale gets a localized <head>",
+        "JSON-LD FAQPage with 3 concrete Q&A pairs"
+      ],
+      "findings": [
+        {
+          "title": "Static body is empty — no visible H1/H2 in pre-rendered HTML",
+          "severity": "High",
+          "description": "Each locale's pre-rendered HTML has only <div id='root'></div> in the body. The hero text, features, and FAQ body are all rendered client-side. Crawlers that don't execute JS see only the meta description. Affects Bing, Baidu, in-app browsers, and AI crawlers.",
+          "recommendation": "Extend scripts/prerender-locales.mjs to also inline visible body content: <h1> (localized hero title), <h2> (feature sections), FAQ Q&A as plain HTML. The body can still be replaced by React on hydration (use dangerouslySetInnerHTML or a parallel non-hydrated block)."
+        },
+        {
+          "title": "Short meta descriptions in CJK locales (zh-CN 45ch, zh-TW 43ch, ja-JP 74ch)",
+          "severity": "Medium",
+          "description": "Meta description is the primary content snippet shown to users without JS rendering. zh-CN at 45 Chinese characters is well below the 90–155 char sweet spot Google typically displays.",
+          "recommendation": "Expand CJK descriptions to 80–120 chars. Include: supported formats (PNG/JPEG/WebP/AVIF/GIF/SVG), batch, free, browser support. Example zh-CN: '青蛙压缩是一款免费在线图片压缩工具，支持 PNG、JPEG、WebP、AVIF、GIF、SVG 等格式。所有处理都在浏览器本地完成，图片不上传服务器，保护隐私，可批量压缩，日常发送、上传网页都能用。'"
+        },
+        {
+          "title": "No About / Privacy Policy / Terms / Contact pages",
+          "severity": "Medium",
+          "description": "No author identity, no privacy policy, no terms of service, no contact email visible on the homepage. Limits E-E-A-T signals and trust.",
+          "recommendation": "Add /about (or /docs) page with author, project history, GitHub link (joye61/pic-smaller), MIT license. Add a minimal /privacy policy page stating the no-collection architecture. Both can be pre-rendered and added to sitemap."
+        },
+        {
+          "title": "Single indexable page per locale (8 + 1 root)",
+          "severity": "Low",
+          "description": "With only one page per locale, long-tail keyword coverage depends on the homepage ranking for everything. Limits topical authority.",
+          "recommendation": "Add 3-5 use-case landing pages: /compress-for-email, /compress-for-web, /compress-for-whatsapp, /png-vs-webp. Each pre-rendered with localized meta + FAQ. Adds 4-5x indexable URLs per locale."
+        }
+      ]
+    },
+    {
+      "name": "On-Page SEO",
+      "weight": 0.20,
+      "score": 78,
+      "what_works": [
+        "Title pattern 'Brand - Descriptor' consistent across all 9 locales",
+        "All hreflang alternates declared correctly (9 locales + x-default)",
+        "Comprehensive OG/Twitter tags including image dimensions, type, alt",
+        "Self-referencing canonical on every page (modulo www mismatch)",
+        "Keyword targeting aligned with locale (图片压缩, image compression, 画像圧縮, etc.)"
+      ],
+      "findings": [
+        {
+          "title": "x-default is zh-CN (not English)",
+          "severity": "Low",
+          "description": "hreflang x-default is set to https://compresspic.top/ (the Chinese homepage). English-speaking searchers landing on / will see Chinese content. If you want English-first global discoverability, set x-default to /en-US/.",
+          "recommendation": "If the site is primarily a Chinese tool, keep current x-default. If targeting global English-speaking users, change x-default to /en-US/."
+        },
+        {
+          "title": "No internal links in static HTML (no language picker)",
+          "severity": "Low",
+          "description": "All navigation is rendered client-side. Users without JS (and crawlers without JS execution) have no way to reach other locales from the homepage. No internal link equity flows.",
+          "recommendation": "Add a simple language picker to the prerendered body (footer or top-right corner), listing all 9 locales as <a href='/en-US/'>English</a> etc."
+        }
+      ]
+    },
+    {
+      "name": "Schema / Structured Data",
+      "weight": 0.10,
+      "score": 70,
+      "what_works": [
+        "Valid JSON-LD across all 9 locales",
+        "Appropriate type selection: WebSite + SoftwareApplication + FAQPage",
+        "Localized strings (name, description, FAQ Q&A) per locale",
+        "Offer with price=0, priceCurrency=USD correctly identifies free app"
+      ],
+      "findings": [
+        {
+          "title": "SoftwareApplication missing author, datePublished, softwareVersion",
+          "severity": "Medium",
+          "description": "SoftwareApplication schema has only @id, @type, applicationCategory, operatingSystem, url, description, image, offers. Missing author (linking to joye61/pic-smaller), datePublished, softwareVersion (currently 1.1.0), featureList.",
+          "recommendation": "Add fields: author: { @type: Organization, name: 'joye61', url: 'https://github.com/joye61/pic-smaller' }, datePublished: '2024-01-01', softwareVersion: '1.1.0', featureList: ['Local compression', 'No server upload', 'Multiple formats', 'Batch support', 'Open source MIT']"
+        },
+        {
+          "title": "No Organization schema separate from SoftwareApplication",
+          "severity": "Low",
+          "description": "Google Knowledge Graph needs an Organization entity to link the site to a brand identity. Currently no standalone Organization schema.",
+          "recommendation": "Add a separate Organization block (not in @graph): { @type: Organization, name: 'joye61', url: 'https://github.com/joye61/pic-smaller', logo: 'https://compresspic.top/logo.svg' }"
+        },
+        {
+          "title": "FAQPage only has 3 Q&A (rich result policy restricted)",
+          "severity": "Low",
+          "description": "Google restricted FAQ rich results to government/health sites in 2023. For other sites, FAQ schema still helps AI extraction but won't show as rich snippets. Currently 3 Q&A which is minimal.",
+          "recommendation": "Expand FAQ to 6-10 Q&A: supported formats, max file size, browser compatibility, mobile support, comparison vs other tools, troubleshooting. Even without SERP rich results, AI crawlers extract these heavily."
+        }
+      ]
+    },
+    {
+      "name": "Performance (CWV)",
+      "weight": 0.10,
+      "score": 65,
+      "what_works": [
+        "Gzip compression enabled (67-70% ratio) on all text",
+        "Hero image already in WebP format",
+        "Static asset bundle hashed for cache-busting",
+        "Cloudflare CDN with HTTP/2 + HTTP/3 (alt-svc) enabled",
+        "HTML payload small (5-7 KB pre-rendered)"
+      ],
+      "findings": [
+        {
+          "title": "No preload hints for hero image or main JS bundle",
+          "severity": "High",
+          "description": "Only preconnect to googletagmanager.com is declared. No <link rel='preload' as='image' href='/assets/frog-hero-bg-1600.webp'> and no modulepreload for /assets/index-CyHHZpPs.js. Hero LCP waits for HTML -> JS parse -> image fetch sequence.",
+          "recommendation": "Add to <head>: <link rel='preload' as='image' href='/assets/frog-hero-bg-1600.webp' type='image/webp' imagesrcset='...' imagesizes='...'> and <link rel='modulepreload' href='/assets/index-CyHHZpPs.js'>. Expected LCP improvement: 200-500ms on mobile."
+        },
+        {
+          "title": "Antd bundled in full (581 KB JS / 188 KB gzipped)",
+          "severity": "Medium",
+          "description": "Main JS chunk is large because Antd 5.x ships CSS-in-JS and barrel imports. Most pages use only a handful of Antd components.",
+          "recommendation": "Switch from `import { Button, Slider } from 'antd'` to direct imports `import Button from 'antd/es/button'`. Add @ant-design/icons selective imports. Expected savings: 100-200 KB gzipped."
+        },
+        {
+          "title": "Hero WebP not responsive (1600x686 served to mobile)",
+          "severity": "Medium",
+          "description": "Same 109 KB hero image is served to all viewport sizes. Mobile users pay for desktop-sized assets.",
+          "recommendation": "Generate 800w and 1200w variants. Use <picture><source media='(min-width: 768px)' srcset='/assets/frog-hero-bg-1200.webp'><source srcset='/assets/frog-hero-bg-800.webp'></picture>. Expected savings: 30-50% on mobile."
+        }
+      ]
+    },
+    {
+      "name": "AI Search Readiness",
+      "weight": 0.10,
+      "score": 50,
+      "what_works": [
+        "Clear factual product description suitable for AI extraction",
+        "FAQPage JSON-LD provides Q&A for AI summarization",
+        "Cloudflare Content-Signal header (search=yes, ai-train=no) — opt-out of training while allowing retrieval",
+        "Multi-language coverage declared via hreflang"
+      ],
+      "findings": [
+        {
+          "title": "llms.txt returns the SPA shell HTML, not a real llms.txt",
+          "severity": "High",
+          "description": "/llms.txt returns HTTP 200 but the body is the homepage HTML (5377 bytes), not a real llms.txt. LLM crawlers following the llmstxt.org convention (Anthropic, OpenAI, Cursor, Windsurf) extract garbage. This is worse than not having one.",
+          "recommendation": "Create a real /llms.txt (plain text or markdown) describing the site for LLMs. Suggested content: product name, what it does, when to recommend, when not to, languages, technology stack, GitHub link. Suggested llms.txt content provided in findings/geo.md."
+        },
+        {
+          "title": "All major AI training crawlers blocked",
+          "severity": "Medium",
+          "description": "GPTBot, ClaudeBot, Google-Extended, Bytespider, CCBot, Applebot-Extended, meta-externalagent, Amazonbot are all Disallow: /. This is a privacy-first choice but eliminates AI citation opportunities.",
+          "recommendation": "Keep `ai-train=no` for training purposes. Consider allowing specific retrieval-only bots: OAI-SearchBot, PerplexityBot, Claude-User, Claude-SearchBot, Applebot. These enable AI assistants to cite your site without contributing to training data."
+        },
+        {
+          "title": "No Organization / author identity for AI to attribute",
+          "severity": "Medium",
+          "description": "AI assistants prefer to cite named entities. The site has no Organization schema, no GitHub link from the homepage, no About page. AI may hesitate to recommend an 'anonymous' tool.",
+          "recommendation": "Add Organization schema linking to github.com/joye61/pic-smaller. Add a small footer link to the GitHub repo. Consider adding an /about page."
+        },
+        {
+          "title": "x-default lang mismatch (zh-CN as default but brand is multilingual)",
+          "severity": "Low",
+          "description": "For users outside any declared locale, x-default routes to Chinese. AI assistants with locale detection may not surface this site to English-speaking users as confidently.",
+          "recommendation": "Consider setting x-default to the most universal landing page (en-US) so non-zh-CN/non-declared locales land in English."
+        }
+      ]
+    },
+    {
+      "name": "Images",
+      "weight": 0.05,
+      "score": 75,
+      "what_works": [
+        "WebP format for hero image (saves 25-35% vs JPEG/PNG)",
+        "OG image includes width, height, type, alt attributes",
+        "SVG favicon (vector, modern)",
+        "Image dimensions (1600x686) appropriate for OG"
+      ],
+      "findings": [
+        {
+          "title": "Hero image has no responsive variants",
+          "severity": "Medium",
+          "description": "Single 1600x686 hero WebP (109 KB) served to all viewports. Mobile users download desktop-sized assets.",
+          "recommendation": "Generate 800w and 1200w variants, use <picture> or srcset. Save 30-50% on mobile."
+        },
+        {
+          "title": "No apple-touch-icon declared",
+          "severity": "Low",
+          "description": "iOS Safari will use the SVG favicon at low quality when adding to home screen.",
+          "recommendation": "Add apple-touch-icon (180x180 PNG or SVG if targeting iOS 18+)."
+        }
+      ]
+    }
+  ],
+  "action_plan": {
+    "phases": [
+      {
+        "name": "Phase 1: Critical Fixes",
+        "timeframe": "Week 1",
+        "items": [
+          {
+            "title": "Resolve canonical/www mismatch",
+            "severity": "Critical",
+            "owner": "Engineering",
+            "effort": "1-2 hours",
+            "steps": [
+              "Decide canonical host: recommend www.compresspic.top",
+              "Add Cloudflare redirect rule: compresspic.top/* -> 301 -> https://www.compresspic.top/:splat",
+              "Update canonical, hreflang, sitemap <loc>, OG/Twitter URLs to use www.compresspic.top",
+              "Verify with curl -I https://compresspic.top/ returns 301 to www"
+            ]
+          },
+          {
+            "title": "Resolve trailing-slash 307 redirect",
+            "severity": "High",
+            "owner": "Engineering",
+            "effort": "30 min",
+            "steps": [
+              "Decide: keep slash or remove slash",
+              "If removing: drop the 307 redirect, update canonical + sitemap to no-slash URLs",
+              "If keeping: redirect /en-US -> /en-US/ (reverse direction)",
+              "Re-submit sitemap in GSC"
+            ]
+          },
+          {
+            "title": "Configure 404 handling for non-existent paths",
+            "severity": "High",
+            "owner": "Engineering",
+            "effort": "1 hour",
+            "steps": [
+              "Add Cloudflare Pages _redirects: /:splat  /404.html  404  (excluding locale paths)",
+              "Verify: curl -I https://www.compresspic.top/about returns 404 with 404.html body",
+              "Verify locale paths still 200: curl -I https://www.compresspic.top/en-US returns 200"
+            ]
+          },
+          {
+            "title": "Create real /llms.txt",
+            "severity": "High",
+            "owner": "Content / Marketing",
+            "effort": "30 min",
+            "steps": [
+              "Write plain-text site description: product name, value props, use cases, tech stack, GitHub link",
+              "Add to scripts/prerender-locales.mjs so each locale gets its own /llms-{locale}.txt",
+              "Add route in Cloudflare Pages: /llms.txt -> /llms-en-US.txt (or per-locale)",
+              "Validate: curl https://www.compresspic.top/llms.txt returns plain text, not HTML"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Phase 2: High-Impact Improvements",
+        "timeframe": "Weeks 2-3",
+        "items": [
+          {
+            "title": "Long-cache hashed static assets",
+            "severity": "Medium",
+            "owner": "Engineering",
+            "effort": "30 min",
+            "steps": [
+              "Create Cloudflare _headers file or Transform Rule",
+              "Pattern: /assets/*",
+              "Set: Cache-Control: public, max-age=31536000, immutable",
+              "Verify with curl -I https://www.compresspic.top/assets/index-CyHHZpPs.js shows new header"
+            ]
+          },
+          {
+            "title": "Preload hero image and main JS bundle",
+            "severity": "High",
+            "owner": "Engineering",
+            "effort": "30 min",
+            "steps": [
+              "Add to <head> in scripts/prerender-locales.mjs:",
+              "<link rel='preload' as='image' href='/assets/frog-hero-bg-1600.webp' type='image/webp'>",
+              "<link rel='modulepreload' href='/assets/index-CyHHZpPs.js'>",
+              "Add srcset/sizes for responsive hero",
+              "Re-deploy, verify with Lighthouse"
+            ]
+          },
+          {
+            "title": "Expand CJK meta descriptions",
+            "severity": "Medium",
+            "owner": "Content",
+            "effort": "30 min",
+            "steps": [
+              "Edit src/locales/zh-CN.ts, zh-TW.ts, ja-JP.ts",
+              "Expand descriptions to 80-120 chars",
+              "Include: supported formats, batch, free, browser support",
+              "Re-build and re-deploy"
+            ]
+          },
+          {
+            "title": "Inline visible body content in prerender",
+            "severity": "High",
+            "owner": "Engineering",
+            "effort": "2-3 hours",
+            "steps": [
+              "Extend scripts/prerender-locales.mjs to inject <h1>, <h2>, FAQ Q&A into <body>",
+              "Use parallel non-hydrated block (hidden visually, replaced by React on mount)",
+              "Or use <noscript> fallback for no-JS users",
+              "Validate with curl https://www.compresspic.top/ shows H1 in body"
+            ]
+          },
+          {
+            "title": "Add security headers via Cloudflare Transform Rules",
+            "severity": "Medium",
+            "owner": "Engineering",
+            "effort": "1 hour",
+            "steps": [
+              "Add Response Header Rules for *:",
+              "X-Content-Type-Options: nosniff",
+              "Referrer-Policy: strict-origin-when-cross-origin",
+              "X-Frame-Options: DENY",
+              "Permissions-Policy: camera=(), microphone=(), geolocation=()",
+              "Verify HSTS is on (Cloudflare SSL/TLS > Edge Certificates > HSTS)"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Phase 3: Content & Authority",
+        "timeframe": "Month 2",
+        "items": [
+          {
+            "title": "Expand FAQ to 6-10 Q&A pairs",
+            "severity": "Low",
+            "owner": "Content",
+            "effort": "2 hours",
+            "steps": [
+              "Identify common questions: supported formats, max file size, browser support, mobile, comparison vs other tools",
+              "Add to FAQPage mainEntity in scripts/prerender-locales.mjs",
+              "Translate to all 9 locales"
+            ]
+          },
+          {
+            "title": "Enrich SoftwareApplication schema",
+            "severity": "Medium",
+            "owner": "Engineering",
+            "effort": "1 hour",
+            "steps": [
+              "Add author, datePublished, softwareVersion, featureList to SoftwareApplication",
+              "Add separate Organization schema block",
+              "Validate with Google Rich Results Test"
+            ]
+          },
+          {
+            "title": "Add About and Privacy Policy pages",
+            "severity": "Medium",
+            "owner": "Content",
+            "effort": "4 hours",
+            "steps": [
+              "Create src/pages/about.{ts,tsx}, src/pages/privacy.{ts,tsx}",
+              "Pre-render for each locale (or fall back to React routes with metadata)",
+              "Add to sitemap",
+              "Link from footer (visible in prerender)"
+            ]
+          },
+          {
+            "title": "Add 3-5 use-case landing pages",
+            "severity": "Low",
+            "owner": "Content + Engineering",
+            "effort": "1-2 days",
+            "steps": [
+              "/compress-for-email, /compress-for-web, /compress-for-whatsapp, /png-vs-webp",
+              "Each pre-rendered with localized title, description, FAQ",
+              "Add to sitemap (9 locales x 4-5 pages = 36-45 new URLs)",
+              "Internal linking between pages"
+            ]
+          },
+          {
+            "title": "Allow retrieval-only AI bots (OAI-SearchBot, PerplexityBot, Claude-User)",
+            "severity": "Medium",
+            "owner": "Engineering",
+            "effort": "30 min",
+            "steps": [
+              "Update robots.txt: add Allow: / for these bots",
+              "Keep Disallow: / for training-only bots (GPTBot, ClaudeBot, Google-Extended, etc.)",
+              "Add same Content-Signal: search=yes,ai-train=no",
+              "Monitor AI citation traffic in analytics"
+            ]
+          },
+          {
+            "title": "Responsive hero image variants",
+            "severity": "Medium",
+            "owner": "Engineering",
+            "effort": "2 hours",
+            "steps": [
+              "Generate 800w and 1200w WebP variants of hero",
+              "Use <picture> with media queries or srcset",
+              "Update images.md in dist/ for OG (use 1600w)"
+            ]
+          },
+          {
+            "title": "Code-split Antd per component",
+            "severity": "Medium",
+            "owner": "Engineering",
+            "effort": "1 day",
+            "steps": [
+              "Replace `import { ... } from 'antd'` with direct imports in src/",
+              "Add @ant-design/icons selective imports",
+              "Verify build size with npm run build",
+              "Target: < 300 KB gzipped main bundle"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Phase 4: Monitoring & Iteration",
+        "timeframe": "Ongoing",
+        "items": [
+          {
+            "title": "Set up Google Search Console monitoring",
+            "severity": "Info",
+            "owner": "Marketing",
+            "effort": "1 hour",
+            "steps": [
+              "Verify https://compresspic.top/ in GSC",
+              "Submit sitemap.xml (after fixing canonical/www)",
+              "Monitor Coverage, Enhancements, Core Web Vitals reports",
+              "Watch for duplicate canonical issues"
+            ]
+          },
+          {
+            "title": "Set up Bing Webmaster Tools",
+            "severity": "Info",
+            "owner": "Marketing",
+            "effort": "30 min",
+            "steps": [
+              "Add <meta name='msvalidate.01' content='...'> from Bing",
+              "Submit sitemap",
+              "Bing is the primary source of pre-AI-overviews organic traffic besides Google"
+            ]
+          },
+          {
+            "title": "Monitor AI citations",
+            "severity": "Info",
+            "owner": "Marketing",
+            "effort": "Ongoing",
+            "steps": [
+              "Test queries in ChatGPT, Perplexity, Claude: 'best free image compressor that doesn't upload', '图片压缩不损画质', etc.",
+              "Track referral traffic from chat.openai.com, perplexity.ai, claude.ai in GA4",
+              "Iterate on llms.txt content based on citation patterns"
+            ]
+          },
+          {
+            "title": "Quarterly Lighthouse audit",
+            "severity": "Info",
+            "owner": "Engineering",
+            "effort": "1 hour",
+            "steps": [
+              "Run PageSpeed Insights on /, /en-US/, /ja-JP/",
+              "Track LCP, INP, CLS trends",
+              "Compare against field data in CrUX (after sufficient traffic)"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "artifacts": {
+    "findings_dir": "findings/",
+    "screenshots_dir": "screenshots/",
+    "files": [
+      "findings/technical.md",
+      "findings/content.md",
+      "findings/schema.md",
+      "findings/performance.md",
+      "findings/geo.md",
+      "findings/on-page.md",
+      "findings/images.md"
+    ]
+  }
+}

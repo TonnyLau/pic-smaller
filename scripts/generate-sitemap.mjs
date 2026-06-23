@@ -20,7 +20,7 @@ const LOCALES = [
   "tr-TR",
   "fa-IR",
 ];
-const DEFAULT_LANG = "zh-CN";
+const DEFAULT_LANG = "en-US";
 
 const lastmod = new Date().toISOString().slice(0, 10);
 
