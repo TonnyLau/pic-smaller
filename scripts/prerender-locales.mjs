@@ -34,6 +34,29 @@ const HERO_H = 686;
 
 const SEO_PAGES = [
   {
+    slug: "compressor",
+    title: "Compressor - Private Image Compression in Your Browser",
+    description:
+      "Use Frog Compress as a private browser compressor for JPG, PNG, WebP, GIF, SVG, and AVIF images. Reduce file size locally before you upload or share.",
+    faqs: [
+      {
+        question: "What can this compressor reduce?",
+        answer:
+          "It can reduce common image formats including JPG, PNG, WebP, GIF, SVG, and AVIF, with format support depending on your browser.",
+      },
+      {
+        question: "Is this compressor private?",
+        answer:
+          "Yes. Frog Compress processes supported images in your browser, so files do not leave your device through the app.",
+      },
+      {
+        question: "Can I use it as a JPG compressor?",
+        answer:
+          "Yes. You can reduce JPG size with quality settings, optional resizing, and a before-and-after comparison before saving.",
+      },
+    ],
+  },
+  {
     slug: "image-compressor",
     title: "Image Compressor - Private Browser Image Compression",
     description:

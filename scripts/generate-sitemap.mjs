@@ -22,6 +22,7 @@ const LOCALES = [
 ];
 const DEFAULT_LANG = "en-US";
 const SEO_ROUTES = [
+  "compressor",
   "image-compressor",
   "jpg-size-reducer",
   "tiny-png-alternative",

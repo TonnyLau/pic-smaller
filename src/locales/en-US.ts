@@ -12,13 +12,13 @@ const localeData: LocaleData = {
     meta: {
       title: "Frog Compress - Private Image Compressor and JPG Size Reducer",
       description:
-        "Frog Compress is a private image compressor and JPG size reducer. Compress JPG, PNG, WebP, GIF, SVG, and AVIF files locally without uploading images.",
+        "A privacy-first alternative to TinyPNG and Compressor.io. Compress JPG, PNG, WebP, GIF, SVG, and AVIF locally, with images never leaving your device.",
     },
     intro: {
       eyebrow: "No upload, local image compressor",
       title: "Make images smaller and keep privacy on your device",
       description:
-        "Frog Compress is built for everyday image cleanup: compress images in the browser, reduce JPG size for forms or sharing, then compare original size, compressed size, and savings before downloading.",
+        "The private image compressor that keeps your files local. Reduce JPG size, compress PNG, and review the result in your browser before downloading. Nothing gets uploaded.",
     },
     features: [
       {
@@ -72,7 +72,7 @@ const localeData: LocaleData = {
     pasteHint: "Tip: You can also paste image with Ctrl+V (Cmd+V), or drag and drop images here",
     slogan: "Compress JPG, PNG, WebP, GIF, SVG, and AVIF locally",
     privacyHint:
-      "A practical TinyPNG or Compressor.io alternative when files should stay on your device",
+      "Looking for a TinyPNG alternative with more privacy? Frog Compress keeps files on your device",
   },
   listAction: {
     batchAppend: "Batch append",

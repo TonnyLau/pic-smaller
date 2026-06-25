@@ -23,6 +23,7 @@ test("robots and sitemap expose the production homepage", () => {
   expect(robots).toContain("User-agent: *");
   expect(robots).toContain(`Sitemap: ${siteUrl}sitemap.xml`);
   expect(sitemap).toContain(`<loc>${siteUrl}</loc>`);
+  expect(sitemap).toContain(`<loc>${siteUrl}compressor/</loc>`);
   expect(sitemap).toContain(`<loc>${siteUrl}image-compressor/</loc>`);
   expect(sitemap).toContain(`<loc>${siteUrl}jpg-size-reducer/</loc>`);
   expect(sitemap).toContain(`<loc>${siteUrl}tiny-png-alternative/</loc>`);

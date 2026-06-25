@@ -1,6 +1,7 @@
 import type { LocaleData } from "@/type";
 
 export type SeoPageSlug =
+  | "compressor"
   | "image-compressor"
   | "jpg-size-reducer"
   | "tiny-png-alternative"
@@ -19,6 +20,38 @@ type SeoPage = {
 };
 
 export const seoPages: Record<SeoPageSlug, SeoPage> = {
+  compressor: {
+    slug: "compressor",
+    title: "Compressor - Private Image Compression in Your Browser",
+    description:
+      "Use Frog Compress as a private browser compressor for JPG, PNG, WebP, GIF, SVG, and AVIF images. Reduce file size locally before you upload or share.",
+    intro: {
+      eyebrow: "Private browser compressor",
+      title: "A compressor for images that should stay on your device",
+      description:
+        "Frog Compress is a browser-based compressor for everyday image files. Reduce JPG size, compress PNG and WebP files, compare the result, and download smaller images without sending them to an upload service.",
+    },
+    comparisonDescription:
+      "Many compressor tools use an online upload flow. Frog Compress keeps compression local, which is useful when you need a quick image compressor before sharing personal photos, product shots, screenshots, or work files.",
+    workflowTitle: "Compress images before you upload or share",
+    faqs: [
+      {
+        question: "What can this compressor reduce?",
+        answer:
+          "It can reduce common image formats including JPG, PNG, WebP, GIF, SVG, and AVIF, with format support depending on your browser.",
+      },
+      {
+        question: "Is this compressor private?",
+        answer:
+          "Yes. Frog Compress processes supported images in your browser, so files do not leave your device through the app.",
+      },
+      {
+        question: "Can I use it as a JPG compressor?",
+        answer:
+          "Yes. You can reduce JPG size with quality settings, optional resizing, and a before-and-after comparison before saving.",
+      },
+    ],
+  },
   "image-compressor": {
     slug: "image-compressor",
     title: "Image Compressor - Private Browser Image Compression",

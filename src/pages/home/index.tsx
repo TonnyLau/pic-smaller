@@ -156,6 +156,41 @@ const LandingSections = observer(() => {
             </tbody>
           </table>
         </div>
+        {content.comparison.switchRows &&
+          content.comparison.switchRows.length > 0 && (
+            <div className={style.switchBlock}>
+              <div className={style.switchIntro}>
+                <Typography.Title level={3}>
+                  {content.comparison.switchTitle}
+                </Typography.Title>
+                <Typography.Paragraph>
+                  {content.comparison.switchDescription}
+                </Typography.Paragraph>
+              </div>
+              <div className={style.switchScroller}>
+                <table className={style.switchTable}>
+                  <thead>
+                    <tr>
+                      <th>Comparison point</th>
+                      <th>TinyPNG</th>
+                      <th>Compressor.io</th>
+                      <th>Frog Compress</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {content.comparison.switchRows.map((row) => (
+                      <tr key={row.factor}>
+                        <th scope="row">{row.factor}</th>
+                        <td>{row.tinyPng}</td>
+                        <td>{row.compressor}</td>
+                        <td>{row.frog}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
         {content.comparison.notes && content.comparison.notes.length > 0 && (
           <div className={style.comparisonNotes}>
             {content.comparison.notes.map((note) => (

@@ -25,6 +25,14 @@ const landingCopy: Record<
       description: string;
       columns: [string, string, string, string];
       notes?: string[];
+      switchTitle?: string;
+      switchDescription?: string;
+      switchRows?: Array<{
+        factor: string;
+        tinyPng: string;
+        compressor: string;
+        frog: string;
+      }>;
       features: [string, string, string, string, string, string];
     };
   }
@@ -38,11 +46,40 @@ const landingCopy: Record<
     comparison: {
       title: "Frog Compress vs TinyPNG and Compressor.io",
       description:
-        "Frog Compress focuses on local browser processing, batch handling, and practical finishing controls for image compressor, tiny png, and jpg size reducer workflows. TinyPNG and Compressor.io are strong online tools, but their public upload flows and plan limits differ.",
+        "Frog Compress focuses on local browser processing, batch handling, and practical finishing controls for image compressor and JPG size reducer workflows. TinyPNG, tiny png searches, and Compressor.io all point to useful online tools, but their upload model is different.",
       columns: ["Feature", "Frog Compress", "TinyPNG", "Compressor.io"],
+      switchTitle: "Why switch from TinyPNG or Compressor.io?",
+      switchDescription:
+        "The main difference is not a claim that one compressor is always better. Frog Compress is built for cases where privacy, local review, and batch finishing controls matter before you upload images anywhere else.",
+      switchRows: [
+        {
+          factor: "Where images are processed",
+          tinyPng: "Uploaded to an online service",
+          compressor: "Uploaded to an online service",
+          frog: "Processed locally in your browser",
+        },
+        {
+          factor: "JPG size reducer workflow",
+          tinyPng: "Quick compression for common uploads",
+          compressor: "Online compression with quality choices",
+          frog: "Compress, resize, compare, then download",
+        },
+        {
+          factor: "Batch and folder handling",
+          tinyPng: "Batch upload workflow",
+          compressor: "Batch workflow depends on plan and limits",
+          frog: "Drag files or folders, then save one ZIP",
+        },
+        {
+          factor: "Output controls",
+          tinyPng: "Focused on compression",
+          compressor: "Compression-focused controls",
+          frog: "Resize, crop, convert format, and adjust quality",
+        },
+      ],
       notes: [
         "Notes: this comparison focuses on common browser image compression workflows, not every paid plan or account feature.",
-        "If you search for an image compressor, tiny png tool, JPG size reducer, or Compressor.io alternative, Frog Compress is designed for the local, no-upload part of that workflow.",
+        "Use the online tools when an upload service fits your workflow. Use Frog Compress when you want a local image compressor before sharing, publishing, or sending files.",
       ],
       features: [
         "Local/private processing",

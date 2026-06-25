@@ -29,6 +29,14 @@ export interface LocaleData {
       description: string;
       columns: [string, string, string, string];
       notes?: string[];
+      switchTitle?: string;
+      switchDescription?: string;
+      switchRows?: Array<{
+        factor: string;
+        tinyPng: string;
+        compressor: string;
+        frog: string;
+      }>;
       rows: Array<{
         feature: string;
         frog: boolean;
