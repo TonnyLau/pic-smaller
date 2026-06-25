@@ -23,6 +23,18 @@ import { useResponse } from "@/media";
 import { RightOption } from "./RightOption";
 import { LeftContent } from "./LeftContent";
 import { useEffect } from "react";
+import {
+  applySeoPageContent,
+  getCanonicalUrl,
+  getSeoPageSlug,
+} from "@/seoPages";
+
+function useHomeContent() {
+  const content = gstate.locale?.homeContent;
+  if (!content) return null;
+  const slug = getSeoPageSlug(gstate.pathname);
+  return applySeoPageContent(content, slug);
+}
 
 const featureIcons = [
   <SafetyCertificateOutlined />,
@@ -32,7 +44,7 @@ const featureIcons = [
 ];
 
 const LandingSections = observer(() => {
-  const content = gstate.locale?.homeContent;
+  const content = useHomeContent();
   if (!content) return null;
 
   return (
@@ -144,6 +156,13 @@ const LandingSections = observer(() => {
             </tbody>
           </table>
         </div>
+        {content.comparison.notes && content.comparison.notes.length > 0 && (
+          <div className={style.comparisonNotes}>
+            {content.comparison.notes.map((note) => (
+              <Typography.Paragraph key={note}>{note}</Typography.Paragraph>
+            ))}
+          </div>
+        )}
       </section>
 
       <div className={style.workflowBand}>
@@ -237,7 +256,9 @@ const Body = observer(() => {
 
 const Home = observer(() => {
   useWorkerHandler();
-  const meta = gstate.locale?.homeContent.meta;
+  const content = useHomeContent();
+  const meta = content?.meta;
+  const slug = getSeoPageSlug(gstate.pathname);
 
   useEffect(() => {
     if (!meta) return;
@@ -250,7 +271,15 @@ const Home = observer(() => {
       document.head.appendChild(description);
     }
     description.content = meta.description;
-  }, [meta]);
+    const canonicalSelector = 'link[rel="canonical"]';
+    let canonical = document.querySelector<HTMLLinkElement>(canonicalSelector);
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.rel = "canonical";
+      document.head.appendChild(canonical);
+    }
+    canonical.href = getCanonicalUrl(slug);
+  }, [meta, slug]);
 
   // 全局粘贴事件处理
   useEffect(() => {

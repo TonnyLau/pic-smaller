@@ -28,6 +28,7 @@ export interface LocaleData {
       title: string;
       description: string;
       columns: [string, string, string, string];
+      notes?: string[];
       rows: Array<{
         feature: string;
         frog: boolean;

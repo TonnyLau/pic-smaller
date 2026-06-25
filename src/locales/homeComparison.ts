@@ -24,6 +24,7 @@ const landingCopy: Record<
       title: string;
       description: string;
       columns: [string, string, string, string];
+      notes?: string[];
       features: [string, string, string, string, string, string];
     };
   }
@@ -35,10 +36,14 @@ const landingCopy: Record<
         "These text-only brand tiles represent the kind of product, content, and operations teams that often need fast image prep. They are not customer claims or endorsements.",
     },
     comparison: {
-      title: "How Frog Compress compares",
+      title: "Frog Compress vs TinyPNG and Compressor.io",
       description:
-        "Frog Compress focuses on local browser processing, batch handling, and practical finishing controls. TinyPNG and Compressor.io are strong online tools, but their public upload flows and plan limits differ.",
+        "Frog Compress focuses on local browser processing, batch handling, and practical finishing controls for image compressor, tiny png, and jpg size reducer workflows. TinyPNG and Compressor.io are strong online tools, but their public upload flows and plan limits differ.",
       columns: ["Feature", "Frog Compress", "TinyPNG", "Compressor.io"],
+      notes: [
+        "Notes: this comparison focuses on common browser image compression workflows, not every paid plan or account feature.",
+        "If you search for an image compressor, tiny png tool, JPG size reducer, or Compressor.io alternative, Frog Compress is designed for the local, no-upload part of that workflow.",
+      ],
       features: [
         "Local/private processing",
         "Batch workflow",
@@ -232,6 +237,7 @@ export function getLandingContent(locale: LandingLocale) {
       title: copy.comparison.title,
       description: copy.comparison.description,
       columns: copy.comparison.columns,
+      notes: copy.comparison.notes,
       rows: copy.comparison.features.map((feature, index) => ({
         feature,
         ...supportRows[index],

@@ -10,15 +10,15 @@ const localeData: LocaleData = {
     "Drag the dividing line to compare the compression effect: the left is the original image, the right is the compressed image",
   homeContent: {
     meta: {
-      title: "Frog Compress - Local Image Compression Tool",
+      title: "Frog Compress - Private Image Compressor and JPG Size Reducer",
       description:
-        "Frog Compress compresses images in your browser. Images are not uploaded, privacy stays local, and files get smaller while staying clear for everyday use.",
+        "Frog Compress is a private image compressor and JPG size reducer. Compress JPG, PNG, WebP, GIF, SVG, and AVIF files locally without uploading images.",
     },
     intro: {
-      eyebrow: "No upload, local processing",
+      eyebrow: "No upload, local image compressor",
       title: "Make images smaller and keep privacy on your device",
       description:
-        "Frog Compress is built for everyday image cleanup. Add images, let the browser compress them locally, then compare original size, compressed size, and savings before downloading.",
+        "Frog Compress is built for everyday image cleanup: compress images in the browser, reduce JPG size for forms or sharing, then compare original size, compressed size, and savings before downloading.",
     },
     features: [
       {
@@ -27,14 +27,14 @@ const localeData: LocaleData = {
           "Images are processed in your browser and are not sent to a server, so personal photos, screenshots, and work files stay on your device.",
       },
       {
-        title: "One-click slimming",
+        title: "Quick image compressor",
         description:
-          "Drop images in and compression starts automatically. No account, no install, no complex settings required.",
+          "Drop images in and compression starts automatically. No account, no install, no complex settings required when you just need to compress a file fast.",
       },
       {
-        title: "Smaller but still clear",
+        title: "JPG size reducer controls",
         description:
-          "The default settings reduce file size while trying to preserve the clarity needed for sharing, uploading, and viewing.",
+          "The default settings reduce file size while trying to preserve the clarity needed for sharing, uploading, and viewing. Resize controls help when a JPG is still too large.",
       },
       {
         title: "Batch image workflow",
@@ -68,8 +68,11 @@ const localeData: LocaleData = {
   },
   uploadCard: {
     title: "Select files here, support dragging files and folders",
-    subTitle: "Open source batch image compression tool, supports %s format",
-    pasteHint: "💡 Tip: You can also paste image with Ctrl+V (Cmd+V), or drag and drop images here",
+    subTitle: "Private batch image compressor, supports %s format",
+    pasteHint: "Tip: You can also paste image with Ctrl+V (Cmd+V), or drag and drop images here",
+    slogan: "Compress JPG, PNG, WebP, GIF, SVG, and AVIF locally",
+    privacyHint:
+      "A practical TinyPNG or Compressor.io alternative when files should stay on your device",
   },
   listAction: {
     batchAppend: "Batch append",
@@ -93,7 +96,7 @@ const localeData: LocaleData = {
   },
   optionPannel: {
     failTip: "Cannot be smaller, please adjust the parameters and try again.",
-    help: "Frog Compress is a batch image compression application. Modifications to the options will be applied to all images.",
+    help: "Frog Compress is a batch image compressor. Quality, resize, crop, and output settings apply to every image in the current batch.",
     resizeLable: "Resize image",
     jpegLable: "JPEG/WEBP parameters",
     pngLable: "PNG parameters",

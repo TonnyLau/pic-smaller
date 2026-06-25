@@ -21,13 +21,19 @@ const LOCALES = [
   "fa-IR",
 ];
 const DEFAULT_LANG = "en-US";
+const SEO_ROUTES = [
+  "image-compressor",
+  "jpg-size-reducer",
+  "tiny-png-alternative",
+  "compressor-io-alternative",
+];
 
 const lastmod = new Date().toISOString().slice(0, 10);
 
 const urlFor = (lang) =>
   lang === DEFAULT_LANG ? `${SITE}/` : `${SITE}/${lang}/`;
 
-const urls = LOCALES.map((lang) => {
+const localizedUrls = LOCALES.map((lang) => {
   const alternates = LOCALES.map(
     (l) =>
       `    <xhtml:link rel="alternate" hreflang="${l}" href="${urlFor(l)}"/>`,
@@ -44,10 +50,20 @@ ${xdefault}
   </url>`;
 }).join("\n");
 
+const seoUrls = SEO_ROUTES.map(
+  (slug) => `  <url>
+    <loc>${SITE}/${slug}/</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>`,
+).join("\n");
+
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${urls}
+${localizedUrls}
+${seoUrls}
 </urlset>
 `;
 

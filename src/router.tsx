@@ -7,6 +7,7 @@ import {
   parseLocaleFromPath,
   supportedLangs,
 } from "./locale";
+import { getSeoPageSlug } from "./seoPages";
 
 export const history = createBrowserHistory();
 
@@ -53,7 +54,9 @@ export function initRouter() {
 async function handleRouteChange(location: Location) {
   const { lang, rest } = parseLocaleFromPath(location.pathname);
   const firstSeg = location.pathname.split("/").filter(Boolean)[0] ?? "";
-  const localeIsValid = firstSeg === "" || supportedLangs.includes(firstSeg);
+  const topicSlug = getSeoPageSlug(rest);
+  const localeIsValid =
+    firstSeg === "" || supportedLangs.includes(firstSeg) || !!topicSlug;
 
   // Unknown prefix like "/xx/" — render error404.
   if (!localeIsValid) {
@@ -68,13 +71,13 @@ async function handleRouteChange(location: Location) {
   await applyLang(langToApply);
 
   // Only the home page exists today; anything past the locale prefix → 404.
-  if (rest !== "/") {
+  if (rest !== "/" && !topicSlug) {
     gstate.pathname = "error404";
     gstate.page = await loadPageComponent("error404");
     return;
   }
 
-  gstate.pathname = "home";
+  gstate.pathname = topicSlug ?? "home";
   try {
     gstate.page = await loadPageComponent("home");
   } catch {

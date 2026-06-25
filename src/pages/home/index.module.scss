@@ -261,6 +261,18 @@ $border: 1px solid #dfdfdf;
   color: #d94b4b;
 }
 
+.comparisonNotes {
+  margin-top: 12px;
+  padding: 0 2px;
+
+  p {
+    margin: 0 0 6px;
+    color: #6d7771;
+    font-size: 13px;
+    line-height: 1.65;
+  }
+}
+
 .workflowBand {
   display: flex;
   align-items: center;

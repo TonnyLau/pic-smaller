@@ -32,6 +32,101 @@ const OG_IMAGE_WEBP = "/assets/frog-hero-bg-1600.webp";
 const HERO_W = 1600;
 const HERO_H = 686;
 
+const SEO_PAGES = [
+  {
+    slug: "image-compressor",
+    title: "Image Compressor - Private Browser Image Compression",
+    description:
+      "Use Frog Compress as a private image compressor for JPG, PNG, WebP, GIF, SVG, and AVIF files. Compress images locally, compare results, and download smaller files.",
+    faqs: [
+      {
+        question: "Is this image compressor online or local?",
+        answer:
+          "The app runs in the browser and processes supported image files locally. Your images are not sent to a server by Frog Compress.",
+      },
+      {
+        question: "Can it compress JPG and PNG files together?",
+        answer:
+          "Yes. You can add JPG, PNG, WebP, GIF, SVG, and AVIF files in one batch, then download individual images or one ZIP archive.",
+      },
+      {
+        question: "How is it different from TinyPNG or Compressor.io?",
+        answer:
+          "Those tools are strong online compressors. Frog Compress is focused on local privacy, batch work, format conversion, and quick before-and-after comparison.",
+      },
+    ],
+  },
+  {
+    slug: "jpg-size-reducer",
+    title: "JPG Size Reducer - Make JPEG Images Smaller Locally",
+    description:
+      "Reduce JPG size in your browser with Frog Compress. Resize, adjust JPEG quality, compare before and after, and keep image compression private.",
+    faqs: [
+      {
+        question: "Will the JPG look blurry after size reduction?",
+        answer:
+          "Quality can change with any JPG compression. Frog Compress uses practical defaults and lets you compare the compressed image before saving it.",
+      },
+      {
+        question: "Can I resize a JPG as well as compress it?",
+        answer:
+          "Yes. You can reduce file size with JPEG quality settings and resize dimensions when the image is larger than needed.",
+      },
+      {
+        question: "Does the JPG size reducer upload my photos?",
+        answer:
+          "No. Compression runs locally in the browser, so private photos and work images stay on your device.",
+      },
+    ],
+  },
+  {
+    slug: "tiny-png-alternative",
+    title: "TinyPNG Alternative - Local Batch Image Compression",
+    description:
+      "Compare Frog Compress as a TinyPNG alternative for private local compression, batch image workflows, resize controls, format conversion, and ZIP download.",
+    faqs: [
+      {
+        question: "Why use Frog Compress instead of TinyPNG?",
+        answer:
+          "Use Frog Compress when local privacy, folder drag-and-drop, batch ZIP download, resize controls, or output format conversion matter more than a simple upload page.",
+      },
+      {
+        question: "Does it work for PNG and JPG?",
+        answer:
+          "Yes. Frog Compress supports common web image formats including PNG, JPG, WebP, GIF, SVG, and AVIF.",
+      },
+      {
+        question: "Is there a daily upload limit?",
+        answer:
+          "Frog Compress runs in your browser and does not use a hosted upload queue, so the practical limit is your device and browser memory.",
+      },
+    ],
+  },
+  {
+    slug: "compressor-io-alternative",
+    title: "Compressor.io Alternative - Private Image Compression",
+    description:
+      "Use Frog Compress as a Compressor.io alternative when you need local image compression, batch handling, before-and-after comparison, and no server upload.",
+    faqs: [
+      {
+        question: "Is Frog Compress a Compressor.io replacement?",
+        answer:
+          "It can be an alternative when you want local browser compression, batch handling, and no server upload for supported image formats.",
+      },
+      {
+        question: "Can I compare image quality after compression?",
+        answer:
+          "Yes. Frog Compress includes before-and-after comparison so you can check whether the smaller file still looks acceptable.",
+      },
+      {
+        question: "Does it support batch image compression?",
+        answer:
+          "Yes. You can add multiple files or folders, compress them together, and download results one by one or as a ZIP.",
+      },
+    ],
+  },
+];
+
 // Parse a TS locale file. Locale files have a stable shape:
 //   logo: "...",
 //   homeContent: { meta: { title: "...", description: "..." }, ..., faqs: [...] }
@@ -74,8 +169,12 @@ function parseLocale(ts) {
 const escapeAttr = (s) =>
   s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 
-function buildJsonLd(lang, locale) {
-  const url = lang === DEFAULT_LOCALE ? `${SITE_URL}/` : `${SITE_URL}/${lang}/`;
+function buildJsonLd(lang, locale, pagePath = null) {
+  const url = pagePath
+    ? `${SITE_URL}${pagePath}`
+    : lang === DEFAULT_LOCALE
+      ? `${SITE_URL}/`
+      : `${SITE_URL}/${lang}/`;
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -110,9 +209,13 @@ function buildJsonLd(lang, locale) {
   };
 }
 
-function buildHtml(template, lang, locale) {
+function buildHtml(template, lang, locale, pagePath = null) {
   let html = template;
-  const url = lang === DEFAULT_LOCALE ? `${SITE_URL}/` : `${SITE_URL}/${lang}/`;
+  const url = pagePath
+    ? `${SITE_URL}${pagePath}`
+    : lang === DEFAULT_LOCALE
+      ? `${SITE_URL}/`
+      : `${SITE_URL}/${lang}/`;
 
   // <html lang>
   html = html.replace(/<html\s+lang="[^"]*"/, `<html lang="${lang}"`);
@@ -135,20 +238,28 @@ function buildHtml(template, lang, locale) {
     `<link rel="canonical" href="${url}" />`,
   );
 
-  // hreflang alternates
-  for (const l of LOCALES) {
-    const href = l === DEFAULT_LOCALE ? `${SITE_URL}/` : `${SITE_URL}/${l}/`;
+  if (pagePath) {
+    html = html.replace(/^\s*<link rel="alternate"[^>]*>\s*$/gm, "");
     html = html.replace(
-      new RegExp(
-        `<link rel="alternate" hreflang="${l.replace("-", "\\-")}" href="[^"]*"\\s*\\/>`,
-      ),
-      `<link rel="alternate" hreflang="${l}" href="${href}" />`,
+      `<link rel="canonical" href="${url}" />`,
+      `<link rel="canonical" href="${url}" />\n    <link rel="alternate" hreflang="x-default" href="${url}" />`,
+    );
+  } else {
+    // hreflang alternates
+    for (const l of LOCALES) {
+      const href = l === DEFAULT_LOCALE ? `${SITE_URL}/` : `${SITE_URL}/${l}/`;
+      html = html.replace(
+        new RegExp(
+          `<link rel="alternate" hreflang="${l.replace("-", "\\-")}" href="[^"]*"\\s*\\/>`,
+        ),
+        `<link rel="alternate" hreflang="${l}" href="${href}" />`,
+      );
+    }
+    html = html.replace(
+      /<link rel="alternate" hreflang="x-default" href="[^"]*"\s*\/>/,
+      `<link rel="alternate" hreflang="x-default" href="${SITE_URL}/" />`,
     );
   }
-  html = html.replace(
-    /<link rel="alternate" hreflang="x-default" href="[^"]*"\s*\/>/,
-    `<link rel="alternate" hreflang="x-default" href="${SITE_URL}/" />`,
-  );
 
   // OG / Twitter — allow multi-line meta tags (Vite emits them across lines).
   const setMeta = (re, value) => html.replace(re, value);
@@ -206,7 +317,7 @@ function buildHtml(template, lang, locale) {
   );
 
   // JSON-LD
-  const jsonLd = JSON.stringify(buildJsonLd(lang, locale), null, 2);
+  const jsonLd = JSON.stringify(buildJsonLd(lang, locale, pagePath), null, 2);
   html = html.replace(
     /<script type="application\/ld\+json">[\s\S]*?<\/script>/,
     `<script type="application/ld+json">\n${jsonLd}\n    </script>`,
@@ -252,6 +363,24 @@ async function main() {
         `prerender: ${lang} → ${mirrorFile.replace(DIST + "\\", "dist/")} (${(html.length / 1024).toFixed(1)} KB, mirror)`,
       );
     }
+  }
+
+  const enTs = await readFile(join(LOCALES_DIR, `${DEFAULT_LOCALE}.ts`), "utf8");
+  const enLocale = parseLocale(enTs);
+  for (const page of SEO_PAGES) {
+    const locale = {
+      ...enLocale,
+      title: page.title,
+      description: page.description,
+      faqs: page.faqs,
+    };
+    const pagePath = `/${page.slug}/`;
+    const html = buildHtml(template, DEFAULT_LOCALE, locale, pagePath);
+    const outFile = join(DIST, `${page.slug}.html`);
+    await writeFile(outFile, html);
+    console.log(
+      `prerender: ${page.slug} -> ${outFile.replace(DIST + "\\", "dist/")} (${(html.length / 1024).toFixed(1)} KB)`,
+    );
   }
 }
 
